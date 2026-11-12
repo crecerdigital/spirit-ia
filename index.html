@@ -1,0 +1,1526 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="SPIRIT IA v3: consola diaria de trabajo de Crecer Digital. Panel del día, paquete del dueño, coordinador de encargos con Muse, ChatGPT y Gemini, puertas de calidad y respaldo local. Sin suscripciones ni claves." />
+    <meta name="theme-color" content="#0a0d12" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="SPIRIT IA" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <title>SPIRIT IA v3</title>
+    <style>
+      button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
+
+      :root {
+        --bg: #0a0d12;
+        --bg-2: #0e1219;
+        --panel: #141922;
+        --panel-2: #1a212e;
+        --panel-3: #212a39;
+        --ink: #eef1f5;
+        --ink-2: #b7bec9;
+        --ink-3: #8a93a1;
+        --line: #26303f;
+        --line-strong: #3a4657;
+        --gold: #e3a93d;
+        --gold-deep: #a86e12;
+        --gold-soft: #2c2412;
+        --claude: #f0834f;
+        --claude-soft: #2e1c12;
+        --chatgpt: #3fc1a5;
+        --chatgpt-soft: #0f2a24;
+        --gemini: #7aa5f0;
+        --gemini-soft: #16233f;
+        --danger: #f28b82;
+        --danger-soft: #3a1714;
+        --ok: #3fc1a5;
+        --ok-soft: #0f2a24;
+        --shadow: 0 1px 2px rgba(0,0,0,.45), 0 10px 28px rgba(0,0,0,.35);
+        --radius: 14px;
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        * { transition: none !important; animation: none !important; }
+      }
+      body {
+        margin: 0;
+        background:
+          radial-gradient(1100px 480px at 85% -120px, rgba(227,169,61,.10), transparent 60%),
+          radial-gradient(900px 500px at -10% 0, rgba(32,90,196,.10), transparent 55%),
+          var(--bg);
+        color: var(--ink);
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+      /* ---------- Header ---------- */
+      header.topbar {
+        position: sticky; top: 0; z-index: 20;
+        background: rgba(10,13,18,.88);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+      .topbar-in {
+        max-width: 1080px; margin: 0 auto; padding: 10px 16px;
+        display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+      }
+      .wordmark { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: .04em; font-size: 17px; }
+      .wordmark .sigil {
+        width: 30px; height: 30px; border-radius: 9px; flex: none;
+        background: var(--gold); color: #191104;
+        display: grid; place-items: center;
+      }
+      .wordmark .sigil svg { width: 18px; height: 18px; }
+      .wordmark .ver { font-size: 11px; font-weight: 700; color: var(--gold); border: 1px solid var(--gold-deep); border-radius: 999px; padding: 2px 8px; letter-spacing: .08em; }
+      nav.mainnav { margin-left: auto; display: flex; gap: 4px; flex-wrap: wrap; }
+      nav.mainnav a {
+        color: var(--ink-2); text-decoration: none; font-size: 13.5px; font-weight: 600;
+        padding: 8px 10px; border-radius: 8px; min-height: 36px; display: inline-flex; align-items: center;
+      }
+      nav.mainnav a:hover, nav.mainnav a:focus-visible { color: var(--ink); background: var(--panel-2); }
+
+      main { max-width: 1080px; margin: 0 auto; padding: 0 16px 64px; }
+
+      /* ---------- Masthead ---------- */
+      .masthead { padding: 34px 0 8px; }
+      .masthead h1 {
+        font-size: clamp(30px, 6.4vw, 46px); line-height: 1.08; margin: 0 0 12px;
+        font-weight: 800; letter-spacing: -0.015em; max-width: 16ch;
+      }
+      .masthead h1 .accent { color: var(--gold); }
+      .masthead p.lede { font-size: 17px; color: var(--ink-2); max-width: 58ch; margin: 0; }
+      .pulse {
+        margin-top: 22px; display: grid; gap: 1px;
+        background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+        grid-template-columns: 1fr 1fr;
+      }
+      @media (min-width: 720px) { .pulse { grid-template-columns: repeat(4, 1fr); } }
+      .pulse .cell { background: var(--panel); padding: 13px 15px; }
+      .pulse .k { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; }
+      .pulse .v { font-size: 15px; font-weight: 700; margin-top: 3px; }
+      .pulse .v .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--ok); margin-right: 7px; vertical-align: 2px; }
+
+      /* ---------- Sections ---------- */
+      section { margin-top: 46px; }
+      .sec-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+      .sec-head h2 { font-size: 23px; font-weight: 800; margin: 0; letter-spacing: -0.01em; }
+      .sec-head .tag { font-size: 12px; color: var(--ink-3); }
+      .sec-sub { color: var(--ink-2); max-width: 62ch; margin: 0 0 20px; font-size: 15px; }
+
+      /* ---------- Buttons & common ---------- */
+      .btn {
+        appearance: none; border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink);
+        font: inherit; font-size: 14.5px; font-weight: 700; border-radius: 10px;
+        padding: 10px 16px; min-height: 44px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+        transition: background .15s ease, transform .15s ease, border-color .15s ease, opacity .15s ease;
+      }
+      .btn:hover { background: var(--panel-2); }
+      .btn:active { transform: translateY(1px); }
+      .btn:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+      .btn.primary { background: var(--gold); color: #191104; border-color: var(--gold); }
+      .btn.primary:hover { opacity: .9; background: var(--gold); }
+      .btn.gold { background: var(--gold); border-color: var(--gold); color: #191104; }
+      .btn.gold:hover { opacity: .9; background: var(--gold); }
+      .btn.ghost-danger { color: var(--danger); border-color: var(--line-strong); }
+      .btn.ghost-danger:hover { border-color: var(--danger); background: var(--danger-soft); }
+      .btn.small { min-height: 38px; padding: 7px 12px; font-size: 13.5px; }
+      .btn[disabled] { opacity: .45; cursor: not-allowed; }
+      .feedback { font-size: 13.5px; font-weight: 700; color: var(--ok); min-height: 20px; }
+      .feedback.warn { color: var(--danger); }
+      .card {
+        background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+        box-shadow: var(--shadow); padding: 18px;
+      }
+      .pill { font-size: 11.5px; font-weight: 700; letter-spacing: .04em; padding: 3px 9px; border-radius: 999px; background: var(--ac-soft, var(--panel-2)); color: var(--ac, var(--ink-2)); }
+      .pill.prio { background: var(--panel-2); color: var(--ink-2); }
+      .pill.prio.alta { background: var(--danger-soft); color: var(--danger); }
+      .iconbtn {
+        appearance: none; border: 1px solid var(--line-strong); background: var(--panel); color: var(--ink-3);
+        width: 38px; height: 38px; border-radius: 9px; cursor: pointer; display: grid; place-items: center; flex: none;
+      }
+      .iconbtn:hover { color: var(--danger); border-color: var(--danger); }
+      .iconbtn svg { width: 16px; height: 16px; }
+
+      /* ---------- Panel del día ---------- */
+      .daygrid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+      @media (min-width: 700px) { .daygrid { grid-template-columns: 1fr 1fr; } }
+      @media (min-width: 1000px) { .daygrid { grid-template-columns: repeat(3, 1fr); } .daygrid .wide { grid-column: span 2; } }
+      .stat { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
+      .stat .k { font-size: 11.5px; letter-spacing: .11em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+      .stat .big { font-size: 34px; font-weight: 800; line-height: 1.1; margin: 6px 0 2px; letter-spacing: -0.02em; }
+      .stat .big .unit { font-size: 17px; color: var(--ink-2); font-weight: 700; }
+      .stat .sub { font-size: 13.5px; color: var(--ink-2); }
+      .bar-track { height: 10px; border-radius: 999px; background: var(--panel-3); overflow: hidden; margin: 10px 0 4px; }
+      .bar-fill { height: 100%; border-radius: 999px; background: var(--gold); width: 0%; transition: width .3s ease; }
+      .bar-fill.ok { background: var(--ok); }
+      .editrow { display: flex; gap: 8px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+      .editrow label { font-size: 12.5px; color: var(--ink-3); font-weight: 600; }
+      .numin {
+        width: 92px; font: inherit; font-size: 15px; font-weight: 700; color: var(--ink);
+        background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: 9px; padding: 7px 9px; min-height: 38px;
+      }
+      .numin.wide-in { width: 120px; }
+      .funnel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+      .funnel .f-cell { background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+      .funnel .f-k { font-size: 11px; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); font-weight: 700; }
+      .funnel .f-v { font-size: 24px; font-weight: 800; line-height: 1.15; }
+      .funnel .editrow { margin-top: 6px; }
+      .funnel .numin { width: 72px; }
+      .honest-note { font-size: 13px; color: var(--ink-3); margin-top: 14px; }
+      .honest-note b { color: var(--ink-2); }
+
+      /* ---------- Paquete del dueño ---------- */
+      .touch-list { display: grid; gap: 10px; }
+      .touch {
+        background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 13px 14px; display: flex; gap: 12px; align-items: flex-start; box-shadow: var(--shadow);
+      }
+      .touch input[type="checkbox"] { width: 24px; height: 24px; flex: none; margin-top: 2px; accent-color: var(--gold); cursor: pointer; }
+      .touch .t { flex: 1; min-width: 0; font-size: 15px; font-weight: 600; overflow-wrap: anywhere; }
+      .touch.done .t { color: var(--ink-3); text-decoration: line-through; }
+      .touch .who { font-size: 11.5px; font-weight: 700; letter-spacing: .05em; color: var(--gold); text-transform: uppercase; }
+      .addrow { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+      .addrow input[type="text"] {
+        flex: 1; min-width: 200px; font: inherit; font-size: 15px; color: var(--ink);
+        background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: 10px; padding: 10px 12px;
+      }
+
+      /* ---------- Agent cards ---------- */
+      .agents { display: grid; gap: 16px; grid-template-columns: 1fr; }
+      @media (min-width: 900px) { .agents { grid-template-columns: repeat(3, 1fr); } }
+      .agent {
+        background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+        box-shadow: var(--shadow); padding: 20px 20px 18px; display: flex; flex-direction: column;
+        border-top: 4px solid var(--ac, var(--gold));
+      }
+      .agent .a-head { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+      .agent .a-ico {
+        width: 42px; height: 42px; border-radius: 11px; flex: none;
+        background: var(--ac-soft); color: var(--ac); display: grid; place-items: center;
+      }
+      .agent .a-ico svg { width: 22px; height: 22px; }
+      .agent h3 { margin: 0; font-size: 19px; font-weight: 800; }
+      .agent .role { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; font-weight: 600; color: var(--ac); }
+      .agent .does { color: var(--ink-2); font-size: 14.5px; margin: 8px 0 12px; }
+      .agent ul { margin: 0 0 14px; padding: 0; list-style: none; }
+      .agent ul li { font-size: 14px; padding: 5px 0 5px 20px; position: relative; color: var(--ink); border-top: 1px dashed var(--line); }
+      .agent ul li:first-child { border-top: none; }
+      .agent ul li::before { content: ""; position: absolute; left: 2px; top: 13px; width: 7px; height: 7px; border-radius: 2px; background: var(--ac); }
+      .agent .channel {
+        margin-top: auto; font-size: 12.5px; color: var(--ink-2); background: var(--panel-2);
+        border-radius: 9px; padding: 9px 11px; line-height: 1.45;
+      }
+      .agent .channel b { color: var(--ink); }
+      .agent .btn { margin-top: 12px; width: 100%; border-color: var(--ac); color: var(--ac); }
+      .agent .btn:hover { background: var(--ac-soft); }
+
+      /* ---------- Truth cards ---------- */
+      .truth-grid { display: grid; gap: 12px; grid-template-columns: 1fr; }
+      @media (min-width: 820px) { .truth-grid { grid-template-columns: repeat(3, 1fr); } }
+      .truth-card, .install-card {
+        background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+        box-shadow: var(--shadow); padding: 18px;
+      }
+      .truth-card h3, .install-card h3 { margin: 0 0 7px; font-size: 16.5px; font-weight: 800; }
+      .truth-card p, .install-card p, .install-card li { color: var(--ink-2); font-size: 14.5px; }
+      .truth-card p, .install-card p { margin: 0; }
+      .install-card ol { margin: 10px 0; padding-left: 21px; }
+      .install-card .sw-state { font-weight: 700; color: var(--ink); margin-top: 13px; }
+
+      /* ---------- Coordinator ---------- */
+      .coord {
+        background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+        box-shadow: var(--shadow); overflow: hidden;
+      }
+      .coord-top { padding: 20px 20px 4px; border-top: 4px solid var(--gold); }
+      .coord-top h3 { margin: 0 0 4px; font-size: 19px; font-weight: 800; display: flex; align-items: center; gap: 10px; }
+      .coord-top h3 .a-ico { width: 38px; height: 38px; border-radius: 10px; background: var(--gold-soft); color: var(--gold); display: grid; place-items: center; flex: none; }
+      .coord-top h3 .a-ico svg { width: 20px; height: 20px; }
+      .coord-top p { margin: 0 0 14px; color: var(--ink-2); font-size: 14.5px; max-width: 64ch; }
+      .tpl-label { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); font-weight: 600; margin: 4px 0 8px; }
+      .tpls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 6px; }
+      .chip {
+        appearance: none; font: inherit; font-size: 13.5px; font-weight: 600; cursor: pointer;
+        border: 1px solid var(--line-strong); background: var(--panel-2); color: var(--ink);
+        border-radius: 999px; padding: 8px 13px; min-height: 38px;
+      }
+      .chip:hover { border-color: var(--gold); }
+      form.brief { padding: 14px 20px 20px; display: grid; gap: 14px; }
+      @media (min-width: 760px) {
+        form.brief { grid-template-columns: 1fr 1fr; }
+        form.brief .full { grid-column: 1 / -1; }
+      }
+      .field label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+      .field .hint { font-weight: 400; color: var(--ink-3); font-size: 12.5px; }
+      .field input[type="text"], .field select, .field textarea {
+        width: 100%; font: inherit; font-size: 15px; color: var(--ink);
+        background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: 10px; padding: 10px 12px;
+      }
+      .field textarea { min-height: 118px; resize: vertical; line-height: 1.5; }
+      .form-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+      .house-context {
+        margin: 0 20px 18px; border: 1px solid var(--line); border-radius: 10px;
+        background: var(--panel-2); padding: 12px 14px;
+      }
+      .house-context summary { cursor: pointer; font-weight: 800; font-size: 14.5px; }
+      .house-context ul { margin: 10px 0 2px; padding-left: 19px; color: var(--ink-2); font-size: 14px; }
+      .house-context li { margin: 4px 0; }
+      .outwrap { padding: 0 20px 20px; display: none; }
+      .outwrap.show { display: block; }
+      .outwrap .out-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+      .outwrap .out-head .t { font-weight: 800; font-size: 15px; }
+      .outwrap .out-head .spacer { flex: 1; }
+      pre.brief-out {
+        margin: 0; background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px;
+        padding: 14px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; line-height: 1.6;
+        white-space: pre-wrap; word-break: break-word; color: var(--ink); max-height: 380px; overflow: auto;
+      }
+
+      /* ---------- Queue & responses ---------- */
+      .queue-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+      .queue-head h3 { margin: 0; font-size: 18px; font-weight: 800; }
+      .counts { font-size: 13px; color: var(--ink-2); }
+      .counts b { color: var(--ink); }
+      .queue-empty {
+        border: 1.5px dashed var(--line-strong); border-radius: var(--radius); padding: 22px 18px;
+        color: var(--ink-2); font-size: 14.5px; text-align: center; background: var(--panel);
+      }
+      .qitem {
+        background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius);
+        padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; box-shadow: var(--shadow);
+      }
+      .qitem .bar { width: 5px; align-self: stretch; border-radius: 3px; background: var(--ac, var(--gold)); flex: none; }
+      .qitem .body { flex: 1; min-width: 0; }
+      .qitem .t { font-weight: 700; font-size: 15.5px; overflow-wrap: anywhere; }
+      .qitem .meta { font-size: 12.5px; color: var(--ink-3); margin-top: 2px; display: flex; gap: 8px; flex-wrap: wrap; }
+      .qitem .ops { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+      .statusbtn { border-color: var(--line-strong); }
+      .statusbtn[data-s="1"] { border-color: var(--gold); color: var(--gold); }
+      .statusbtn[data-s="2"] { border-color: var(--ok); color: var(--ok); }
+      .response-list { padding: 0 20px 20px; display: grid; gap: 10px; }
+      .response-head { padding: 0 20px 12px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+      .response-head h3 { margin: 0; font-size: 17px; font-weight: 800; }
+      .ritem { margin-bottom: 0; }
+      .ritem .resp-text {
+        margin-top: 11px; background: var(--panel-2); border: 1px solid var(--line); border-radius: 9px;
+        padding: 11px 12px; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 260px; overflow: auto;
+        font-size: 13.5px; line-height: 1.55; color: var(--ink);
+      }
+      .statusbtn[data-v="1"] { border-color: var(--gold); color: var(--gold); }
+      .statusbtn[data-v="2"] { border-color: var(--ok); color: var(--ok); }
+      .statusbtn[data-v="3"] { border-color: var(--danger); color: var(--danger); }
+
+      /* ---------- Puertas de calidad ---------- */
+      .gate-count { font-size: 15px; font-weight: 800; }
+      .gate-count .n { font-size: 26px; color: var(--gold); }
+      .filters { display: grid; gap: 8px; margin-top: 14px; }
+      .filter {
+        display: flex; gap: 12px; align-items: flex-start; background: var(--panel-2);
+        border: 1px solid var(--line); border-radius: 11px; padding: 11px 13px; cursor: pointer;
+      }
+      .filter input[type="checkbox"] { width: 24px; height: 24px; flex: none; margin-top: 1px; accent-color: var(--gold); cursor: pointer; }
+      .filter .f-t { font-weight: 700; font-size: 15px; }
+      .filter .f-n { color: var(--gold); font-weight: 800; margin-right: 6px; }
+      .filter .f-h { font-size: 12.5px; color: var(--ink-3); display: block; margin-top: 1px; }
+      .filter.pass { border-color: var(--gold-deep); background: var(--gold-soft); }
+      .applebox {
+        margin-top: 16px; border: 1.5px solid var(--gold-deep); border-radius: var(--radius);
+        background: var(--gold-soft); padding: 16px 18px;
+      }
+      .applebox .q { font-size: 19px; font-weight: 800; margin: 0 0 4px; }
+      .applebox p { margin: 0 0 12px; color: var(--ink-2); font-size: 14px; }
+      .apple-opts { display: flex; gap: 10px; flex-wrap: wrap; }
+      .apple-opt { min-width: 110px; }
+      .apple-opt.sel-yes { background: var(--ok); border-color: var(--ok); color: #06231c; }
+      .apple-opt.sel-no { background: var(--danger); border-color: var(--danger); color: #2b0d0a; }
+      .verdict {
+        margin-top: 16px; border-radius: var(--radius); padding: 16px 18px; font-size: 15.5px; font-weight: 700;
+        border: 1.5px solid var(--line-strong); background: var(--panel-2); color: var(--ink-2);
+      }
+      .verdict.ok { border-color: var(--ok); background: var(--ok-soft); color: var(--ink); }
+      .verdict.blocked { border-color: var(--danger); background: var(--danger-soft); color: var(--ink); }
+      .verdict .big-v { font-size: 19px; font-weight: 800; display: block; margin-bottom: 4px; }
+      .gate-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
+
+      /* ---------- Flow & rules ---------- */
+      .flow { display: grid; gap: 12px; grid-template-columns: 1fr; counter-reset: paso; }
+      @media (min-width: 860px) { .flow { grid-template-columns: repeat(4, 1fr); } }
+      .step { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+      .step .n { font-family: ui-monospace, monospace; font-size: 13px; font-weight: 600; color: var(--gold); letter-spacing: .08em; }
+      .step h4 { margin: 6px 0 5px; font-size: 16px; font-weight: 800; }
+      .step p { margin: 0; font-size: 14px; color: var(--ink-2); }
+      .rules { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 6px 20px; box-shadow: var(--shadow); }
+      .rules li { padding: 13px 0; border-top: 1px solid var(--line); font-size: 15px; list-style: none; }
+      .rules li:first-child { border-top: none; }
+      .rules ul { margin: 0; padding: 0; }
+      .rules b { font-weight: 700; }
+      .rules span { color: var(--ink-2); }
+
+      /* ---------- Datos ---------- */
+      .data-area {
+        width: 100%; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.55;
+        color: var(--ink); background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: 10px;
+        padding: 12px; min-height: 150px; resize: vertical;
+      }
+      .data-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+      footer { margin-top: 52px; border-top: 1px solid var(--line); padding-top: 18px; color: var(--ink-3); font-size: 13px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-in">
+        <div class="wordmark">
+          <span class="sigil" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/><circle cx="12" cy="12" r="3.2"/></svg>
+          </span>
+          SPIRIT&nbsp;IA <span class="ver">v3</span>
+        </div>
+        <nav class="mainnav" aria-label="Secciones">
+          <a href="#panel">Panel</a>
+          <a href="#paquete">Paquete</a>
+          <a href="#agentes">Agentes</a>
+          <a href="#coordinador">Coordinador</a>
+          <a href="#cola">Cola</a>
+          <a href="#respuestas">Respuestas</a>
+          <a href="#calidad">Calidad</a>
+          <a href="#datos">Datos</a>
+          <a href="#instalar">Instalar</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="masthead">
+        <h1>La consola diaria de <span class="accent">Crecer Digital</span>.</h1>
+        <p class="lede">App principal de trabajo de la casa. Aquí vive el día: el panel con las cifras reales, el paquete del dueño, los encargos del equipo — Muse opera y verifica, ChatGPT analiza, Gemini investiga y crea — y las puertas de calidad antes de publicar. Todo se guarda en este dispositivo.</p>
+        <div class="pulse" role="group" aria-label="Estado del centro de mando">
+          <div class="cell"><div class="k">Estado</div><div class="v"><span class="dot" aria-hidden="true"></span>App v3 · Operativa</div></div>
+          <div class="cell"><div class="k">Fecha</div><div class="v" id="today">—</div></div>
+          <div class="cell"><div class="k">Equipo</div><div class="v">Muse · ChatGPT · Gemini</div></div>
+          <div class="cell"><div class="k">Encargos en cola</div><div class="v" id="pulseQueue">0</div></div>
+        </div>
+      </div>
+
+      <section id="panel" aria-labelledby="h-panel">
+        <div class="sec-head"><h2 id="h-panel">Panel del día</h2><span class="tag mono">cifras reales · editables · se guardan aquí</span></div>
+        <p class="sec-sub">Las medidas de la casa, separadas y sin humo: tablero, fondo, semana, embudo y tareas. Toca un número para corregirlo; el cambio se guarda en este dispositivo al instante. Solo cuenta el dinero <b>cobrado y verificado</b>.</p>
+
+        <div class="daygrid">
+          <div class="stat">
+            <div class="k"><span>Tablero de Poder</span><span id="tableroPctTxt">44%</span></div>
+            <div class="big"><span id="tableroBig">44</span><span class="unit"> / 100</span></div>
+            <div class="bar-track" aria-hidden="true"><div class="bar-fill" id="tableroBar"></div></div>
+            <div class="sub">Avance de la operación completa. Sube solo con hitos verificados.</div>
+            <div class="editrow"><label for="inTablero">Corregir:</label><input class="numin" type="number" id="inTablero" min="0" max="100" step="1" inputmode="numeric" /></div>
+          </div>
+
+          <div class="stat">
+            <div class="k"><span>Fondo diciembre · reunirse con la familia</span><span id="fondoPctTxt">0%</span></div>
+            <div class="big">$<span id="fondoBig">0</span><span class="unit"> de $20,000</span></div>
+            <div class="bar-track" aria-hidden="true"><div class="bar-fill" id="fondoBar"></div></div>
+            <div class="sub">Dinero cobrado y verificado en panel. Ni un centavo prometido cuenta aquí.</div>
+            <div class="editrow"><label for="inFondo">Cobrados $:</label><input class="numin wide-in" type="number" id="inFondo" min="0" step="1" inputmode="decimal" /><label for="inFondoMeta">Meta $:</label><input class="numin wide-in" type="number" id="inFondoMeta" min="1" step="1" inputmode="numeric" /></div>
+          </div>
+
+          <div class="stat">
+            <div class="k"><span>Semana · piso sin parar</span><span id="semanaPctTxt">0%</span></div>
+            <div class="big">$<span id="semanaBig">0</span><span class="unit"> de $400</span></div>
+            <div class="bar-track" aria-hidden="true"><div class="bar-fill" id="semanaBar"></div></div>
+            <div class="sub">Cobrado esta semana contra el piso de $400. Corte los viernes.</div>
+            <div class="editrow"><label for="inSemana">Cobrados $:</label><input class="numin wide-in" type="number" id="inSemana" min="0" step="1" inputmode="decimal" /><label for="inSemanaPiso">Piso $:</label><input class="numin" type="number" id="inSemanaPiso" min="1" step="1" inputmode="numeric" /></div>
+          </div>
+
+          <div class="stat wide">
+            <div class="k"><span>Embudo de clientes</span><span>propuestas → contratos</span></div>
+            <div class="funnel">
+              <div class="f-cell"><div class="f-k">Propuestas en juego</div><div class="f-v" id="embProp">7</div><div class="sub">3 ProZ + 4 OpenTask (750 USDC)</div><div class="editrow"><label for="inEmbProp">Nº:</label><input class="numin" type="number" id="inEmbProp" min="0" step="1" inputmode="numeric" /></div></div>
+              <div class="f-cell"><div class="f-k">Respuestas</div><div class="f-v" id="embResp">1</div><div class="sub">VerboLabs — proceso abierto</div><div class="editrow"><label for="inEmbResp">Nº:</label><input class="numin" type="number" id="inEmbResp" min="0" step="1" inputmode="numeric" /></div></div>
+              <div class="f-cell"><div class="f-k">Entrevistas</div><div class="f-v" id="embEnt">0</div><div class="sub">Conversaciones reales con clientes</div><div class="editrow"><label for="inEmbEnt">Nº:</label><input class="numin" type="number" id="inEmbEnt" min="0" step="1" inputmode="numeric" /></div></div>
+              <div class="f-cell"><div class="f-k">Contratos</div><div class="f-v" id="embCon">0</div><div class="sub">Trabajo cerrado y pagadero</div><div class="editrow"><label for="inEmbCon">Nº:</label><input class="numin" type="number" id="inEmbCon" min="0" step="1" inputmode="numeric" /></div></div>
+            </div>
+          </div>
+
+          <div class="stat">
+            <div class="k"><span>Tareas pagadas hoy</span><span>meta: 30 / día</span></div>
+            <div class="big"><span id="tareasBig">0</span><span class="unit"> completadas</span></div>
+            <div class="bar-track" aria-hidden="true"><div class="bar-fill" id="tareasBar"></div></div>
+            <div class="sub">Trabajos pagados ejecutados en el navegador. Revisar paneles o enviar propuestas no cuenta aquí: eso es captación.</div>
+            <div class="editrow"><label for="inTareas">Hoy:</label><input class="numin" type="number" id="inTareas" min="0" step="1" inputmode="numeric" /></div>
+          </div>
+        </div>
+        <p class="honest-note"><b>Nota honesta:</b> estas cifras arrancan con el estado verificado del 12 de noviembre de 2026 y se actualizan a mano en esta app. La app no las inventa ni las mueve sola.</p>
+      </section>
+
+      <section id="paquete" aria-labelledby="h-paquete">
+        <div class="sec-head"><h2 id="h-paquete">Paquete diario del dueño</h2><span class="tag mono">solo lo que únicamente Cristhiam puede hacer</span></div>
+        <p class="sec-sub">Los toques irreducibles del dueño, juntos en un solo lugar — nada de preguntas sueltas por goteo. Marca cada toque al completarlo; la lista se guarda en este dispositivo. Lo demás lo trabaja Muse sin pedir permiso.</p>
+        <div class="counts" id="paqueteCounts" style="margin-bottom:12px;">—</div>
+        <div class="touch-list" id="paqueteList"></div>
+        <form class="addrow" id="paqueteForm">
+          <input type="text" id="paqueteNew" placeholder="Añadir un toque pendiente del dueño…" autocomplete="off" aria-label="Texto del nuevo toque pendiente" />
+          <button class="btn" type="submit">Añadir toque</button>
+        </form>
+        <div class="feedback" id="paqueteFeedback" role="status" style="margin-top:10px;"></div>
+      </section>
+
+      <section id="agentes" aria-labelledby="h-agentes">
+        <div class="sec-head"><h2 id="h-agentes">Los agentes</h2><span class="tag mono">módulos dentro de la app · canales reales declarados</span></div>
+        <p class="sec-sub">Cada tarjeta dice qué hace el módulo, qué se le puede encargar y por qué canal real llega el trabajo. ChatGPT y Gemini no están conectados por API: sus encargos salen listos para el puente y sus respuestas se registran abajo para que Muse las verifique.</p>
+
+        <div class="agents">
+          <article class="agent" style="--ac: var(--claude); --ac-soft: var(--claude-soft);">
+            <div class="a-head">
+              <span class="a-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a2 2 0 1 1-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+              <div><h3>Muse</h3><div class="role">Operaciones</div></div>
+            </div>
+            <p class="does">Ejecuta el trabajo y lo verifica antes de reportarlo: navega, construye, propone y entrega.</p>
+            <ul>
+              <li>Barridos de pozos y colas de tareas</li>
+              <li>Propuestas a clientes y seguimiento</li>
+              <li>Construcción de páginas y productos</li>
+              <li>Verificación de cada resultado en su fuente</li>
+            </ul>
+            <div class="channel"><b>Canal:</b> directo — trabaja dentro de esta misma casa, sin intermediarios.</div>
+            <button class="btn" type="button" data-assign="Muse">Encargar a Muse</button>
+          </article>
+
+          <article class="agent" style="--ac: var(--chatgpt); --ac-soft: var(--chatgpt-soft);">
+            <div class="a-head">
+              <span class="a-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg></span>
+              <div><h3>ChatGPT</h3><div class="role">Análisis</div></div>
+            </div>
+            <p class="does">Piensa en frío: revisa, critica y propone alternativas antes de ejecutar, para no lanzar nada a ciegas.</p>
+            <ul>
+              <li>Diagnóstico de errores y despliegues rotos</li>
+              <li>Borradores DAX, propuestas y material de estudio</li>
+              <li>Comparación de opciones y riesgos</li>
+              <li>Segunda opinión antes de publicar</li>
+            </ul>
+            <div class="channel"><b>Canal real:</b> puente manual — el Coordinador genera el encargo con el contexto de la casa; se pega en ChatGPT y la respuesta se registra en «Respuestas del equipo» para que Muse la verifique.</div>
+            <button class="btn" type="button" data-assign="ChatGPT">Encargar a ChatGPT</button>
+          </article>
+
+          <article class="agent" style="--ac: var(--gemini); --ac-soft: var(--gemini-soft);">
+            <div class="a-head">
+              <span class="a-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+              <div><h3>Gemini</h3><div class="role">Investigación y creación</div></div>
+            </div>
+            <p class="does">Busca, contrasta fuentes, resume material extenso y crea formatos e ideas para que cada decisión y cada pieza salga con base, no con corazonadas.</p>
+            <ul>
+              <li>Investigación de temas y mercados</li>
+              <li>Búsqueda de fuentes y referencias</li>
+              <li>Resúmenes de documentos largos</li>
+              <li>Formatos, ideas y guiones para canales y productos</li>
+            </ul>
+            <div class="channel"><b>Canal real:</b> puente manual — el Coordinador genera el encargo con el contexto de la casa; se pega en Gemini y la respuesta se registra en «Respuestas del equipo» para que Muse la verifique.</div>
+            <button class="btn" type="button" data-assign="Gemini">Encargar a Gemini</button>
+          </article>
+        </div>
+      </section>
+
+
+      <section id="canales" aria-labelledby="h-canales">
+        <div class="sec-head"><h2 id="h-canales">Canales reales, sin humo</h2><span class="tag mono">lo que hay · lo que no se finge</span></div>
+        <p class="sec-sub">Los tres están dentro de SPIRIT IA como módulos de trabajo. «Dentro» significa rol, encargos, registro y verificación en esta app; no significa una conexión oficial en vivo que hoy no existe.</p>
+        <div class="truth-grid">
+          <article class="truth-card"><h3>Muse — directo</h3><p>Muse trabaja desde la casa: opera, construye, reparte los encargos y verifica cada respuesta antes de darla por buena.</p></article>
+          <article class="truth-card"><h3>ChatGPT y Gemini — puente manual</h3><p>Sus APIs oficiales cobran por uso, así que <b>no hay API conectada ni claves guardadas</b>. Hoy trabajan por el puente de textos dirigido por Muse: el encargo sale de aquí listo para pegar; la respuesta vuelve y queda registrada con su estado de verificación. La app queda lista para enchufar las APIs el día que los ingresos lo paguen.</p></article>
+          <article class="truth-card"><h3>La app — $0 y con memoria local</h3><p>SPIRIT IA no cobra suscripción, no pide claves y no vende una automatización falsa. Desde la v3, la cola, las respuestas, el panel, el paquete y la ficha de calidad se guardan en este dispositivo (localStorage) y sobreviven al cerrar la app; en «Datos y respaldo» se exportan e importan en texto.</p></article>
+        </div>
+      </section>
+
+      <section id="coordinador" aria-labelledby="h-coord">
+        <div class="sec-head"><h2 id="h-coord">El Coordinador</h2><span class="tag mono">reparte · formatea · hace seguimiento</span></div>
+        <p class="sec-sub">Escribe la tarea una sola vez. El Coordinador la convierte en un encargo completo — destinatario, contexto fijo de la casa, contexto del caso, prioridad y criterio de entrega — listo para copiar, descargar o dejar en la cola.</p>
+
+        <div class="coord">
+          <div class="coord-top">
+            <h3><span class="a-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2.4"/><circle cx="4.5" cy="5.5" r="1.8"/><circle cx="19.5" cy="5.5" r="1.8"/><circle cx="4.5" cy="18.5" r="1.8"/><circle cx="19.5" cy="18.5" r="1.8"/><path d="M6 6.8l4.2 3.6M18 6.8l-4.2 3.6M6 17.2l4.2-3.6M18 17.2l-4.2-3.6"/></svg></span>Nuevo encargo</h3>
+            <p>Empieza desde una plantilla o escribe el tuyo. La plantilla de diagnóstico ya trae el caso real del despliegue de SPIRIT IA en Netlify que devolvía 404.</p>
+            <div class="tpl-label" id="tplLabel">Plantillas rápidas</div>
+            <div class="tpls" role="group" aria-labelledby="tplLabel">
+              <button class="chip" type="button" data-tpl="deploy404">Diagnóstico: despliegue 404</button>
+              <button class="chip" type="button" data-tpl="auditoria">Auditoría de una página</button>
+              <button class="chip" type="button" data-tpl="mercado">Investigación de mercado</button>
+              <button class="chip" type="button" data-tpl="revision">Revisión de un texto</button>
+              <button class="chip" type="button" data-tpl="segunda">Segunda opinión</button>
+            </div>
+          </div>
+
+
+          <details class="house-context" open>
+            <summary>Contexto fijo de la casa — incluido en cada encargo</summary>
+            <ul>
+              <li>Crecer Digital es la operación de Cristhiam; se trabaja en español primero.</li>
+              <li>Muse dirige y verifica; ChatGPT analiza; Gemini investiga y crea.</li>
+              <li>Hechos y cifras solo si están verificados; prohibido inventar clientes, ventas, precios o resultados.</li>
+              <li>ChatGPT y Gemini reciben el trabajo por puente manual; nadie debe afirmar una conexión automática inexistente.</li>
+            </ul>
+          </details>
+          <form class="brief" id="briefForm">
+            <div class="field">
+              <label for="fAgent">Destinatario</label>
+              <select id="fAgent" name="agent">
+                <option value="Muse">Muse — Operaciones</option>
+                <option value="ChatGPT">ChatGPT — Análisis</option>
+                <option value="Gemini">Gemini — Investigación</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="fPrio">Prioridad</label>
+              <select id="fPrio" name="prio">
+                <option value="Normal">Normal</option>
+                <option value="Alta">Alta</option>
+                <option value="Lo primero">Lo primero</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="fTitle">Tarea <span class="hint">— una frase clara: qué hay que hacer</span></label>
+              <input type="text" id="fTitle" name="title" placeholder="Ej.: Diagnosticar por qué el sitio desplegado devuelve 404" autocomplete="off" />
+            </div>
+            <div class="field full">
+              <label for="fContext">Contexto y datos <span class="hint">— lo que el agente necesita saber: hechos verificados, enlaces, límites</span></label>
+              <textarea id="fContext" name="context" placeholder="Hechos comprobados, enlaces, qué se probó ya y qué no debe tocarse…"></textarea>
+            </div>
+            <div class="field full">
+              <label for="fDone">Criterio de entrega <span class="hint">— cómo se sabe que el encargo quedó bien hecho</span></label>
+              <input type="text" id="fDone" name="done" placeholder="Ej.: Entregar la causa raíz y el paquete corregido, archivo por archivo" autocomplete="off" />
+            </div>
+            <div class="form-actions full">
+              <button class="btn primary" type="submit">Generar encargo</button>
+              <button class="btn" type="button" id="clearBtn">Limpiar</button>
+            </div>
+          </form>
+
+          <div class="outwrap" id="outWrap" aria-live="polite">
+            <div class="out-head">
+              <span class="t">Encargo listo</span>
+              <span class="spacer"></span>
+              <button class="btn small gold" type="button" id="copyBtn">Copiar encargo</button>
+              <button class="btn small" type="button" id="dlBtn">Descargar .txt</button>
+              <button class="btn small" type="button" id="queueBtn">Añadir a la cola</button>
+            </div>
+            <pre class="brief-out" id="briefOut"></pre>
+            <div class="feedback" id="feedback" role="status"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="cola" aria-labelledby="h-cola">
+        <div class="queue-head">
+          <h3 id="h-cola">Cola de encargos</h3>
+          <span class="counts" id="queueCounts">Sin encargos todavía</span>
+        </div>
+        <div id="queueList">
+          <div class="queue-empty">La cola está vacía. Genera el primer encargo en el Coordinador y añádelo aquí para hacerle seguimiento: pendiente → en curso → hecho. La cola se guarda en este dispositivo.</div>
+        </div>
+      </section>
+
+
+      <section id="respuestas" aria-labelledby="h-respuestas">
+        <div class="sec-head"><h2 id="h-respuestas">Respuestas del equipo</h2><span class="tag mono">pegar · registrar · verificar</span></div>
+        <p class="sec-sub">Aquí se pegan las respuestas que traigan ChatGPT o Gemini por el puente. Quedan guardadas en este dispositivo con su estado de verificación. Pegar una respuesta no la aprueba: Muse la revisa antes de usarla.</p>
+
+        <div class="coord">
+          <form class="brief" id="responseForm">
+            <div class="field">
+              <label for="rSource">Fuente</label>
+              <select id="rSource" name="source">
+                <option value="ChatGPT">ChatGPT — Análisis</option>
+                <option value="Gemini">Gemini — Investigación y creación</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="rStatus">Estado de verificación inicial</label>
+              <select id="rStatus" name="status">
+                <option value="0">Pendiente de verificación</option>
+                <option value="1">En revisión por Muse</option>
+                <option value="2">Verificada por Muse</option>
+                <option value="3">Devuelta a corrección</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="rTitle">Encargo relacionado <span class="hint">— el título del encargo que originó esta respuesta</span></label>
+              <input type="text" id="rTitle" name="related" placeholder="Ej.: Paquete Microsoft / Kit Pyme" autocomplete="off" />
+            </div>
+            <div class="field full">
+              <label for="rText">Respuesta recibida</label>
+              <textarea id="rText" name="response" placeholder="Pega aquí la respuesta completa de ChatGPT o Gemini, sin resumirla…"></textarea>
+            </div>
+            <div class="form-actions full">
+              <button class="btn primary" type="submit">Registrar respuesta</button>
+              <button class="btn" type="button" id="responseClear">Limpiar</button>
+            </div>
+          </form>
+
+          <div class="response-head">
+            <h3>Registro guardado</h3>
+            <span class="counts" id="responseCounts">Sin respuestas registradas</span>
+          </div>
+          <div class="response-list" id="responseList">
+            <div class="queue-empty">Todavía no hay respuestas registradas. Cuando ChatGPT o Gemini entreguen por el puente, pega la respuesta completa aquí y conserva su estado de verificación.</div>
+          </div>
+          <div class="outwrap show" style="padding-top:0;">
+            <div class="feedback" id="responseFeedback" role="status"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="calidad" aria-labelledby="h-calidad">
+        <div class="sec-head"><h2 id="h-calidad">Puertas de calidad</h2><span class="tag mono">los 12 filtros + la pregunta de entrega</span></div>
+        <p class="sec-sub">Nada se marca «listo para publicar» sin pasar esta puerta: los <b>12 filtros de la casa</b> completos y la pregunta de entrega respondida con un sí. 12/12 o no sale — si falta uno, la pieza vuelve al taller y se re-corre la ficha entera. La ficha se guarda en este dispositivo.</p>
+
+        <div class="card">
+          <div class="field">
+            <label for="gatePiece">Pieza a publicar <span class="hint">— nombre del video, producto, página u oferta</span></label>
+            <input type="text" id="gatePiece" placeholder="Ej.: Short IA al Día — video 25" autocomplete="off" style="width:100%; font: inherit; font-size: 15px; color: var(--ink); background: var(--bg-2); border: 1px solid var(--line-strong); border-radius: 10px; padding: 10px 12px;" />
+          </div>
+          <div class="gate-count" style="margin-top:14px;">Filtros superados: <span class="n" id="gateCount">0</span> / 12</div>
+          <div class="bar-track" aria-hidden="true"><div class="bar-fill" id="gateBar"></div></div>
+
+          <div class="filters" id="gateFilters">
+            <label class="filter"><input type="checkbox" data-filter="0" /><span><span class="f-t"><span class="f-n">1</span>Estudio del líder</span><span class="f-h">Existe en archivo el estudio del mejor referente del sector, con fuentes y fecha.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="1" /><span><span class="f-t"><span class="f-n">2</span>Paridad o superioridad funcional</span><span class="f-h">Tabla función por función contra el líder: iguales o mejores en lo central; cada inferioridad declarada con su razón.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="2" /><span><span class="f-t"><span class="f-n">3</span>Legalidad y permisos</span><span class="f-h">Licencias, derechos de uso y términos de la plataforma verificados antes de lanzar; sin zonas grises.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="3" /><span><span class="f-t"><span class="f-n">4</span>Experiencia de usuario (UX)</span><span class="f-h">El recorrido completo no pide más pasos, más lectura ni más ayuda que el referente; lenguaje simple, en español.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="4" /><span><span class="f-t"><span class="f-n">5</span>Diseño y acabado visual</span><span class="f-h">Acabado al nivel del líder: imágenes reales y nítidas, sin desbordes ni textos cortados, revisado en el teléfono del dueño.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="5" /><span><span class="f-t"><span class="f-n">6</span>Contenido y textos</span><span class="f-h">Cero errores visibles; cada cifra cruzada contra su fuente; ninguna promesa que la pieza no cumpla.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="6" /><span><span class="f-t"><span class="f-n">7</span>Honestidad estructural</span><span class="f-h">La pieza solo afirma lo que de verdad hace: sin clientes, ventas ni testimonios inventados; las demos se marcan como demos.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="7" /><span><span class="f-t"><span class="f-n">8</span>Funcionamiento real verificado</span><span class="f-h">Probado en vivo, de principio a fin, en el entorno real (teléfono y panel del dueño), no solo «debería funcionar».</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="8" /><span><span class="f-t"><span class="f-n">9</span>Rendimiento y confiabilidad</span><span class="f-h">Carga rápida en un teléfono común; si algo externo falla, mensaje honesto con alternativa — nunca pantalla muerta.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="9" /><span><span class="f-t"><span class="f-n">10</span>Seguridad y privacidad</span><span class="f-h">Datos mínimos y protegidos; credenciales solo por la Bóveda; nada sensible en textos, enlaces ni registros.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="10" /><span><span class="f-t"><span class="f-n">11</span>Valor real para la persona</span><span class="f-h">La ventaja frente a la alternativa gratuita que la persona ya conoce es concreta, nombrable y verdadera.</span></span></label>
+            <label class="filter"><input type="checkbox" data-filter="11" /><span><span class="f-t"><span class="f-n">12</span>Soporte y mejora continua</span><span class="f-h">Canal de soporte real, métrica para enterarse de fallos y fecha de primera revisión, con responsable.</span></span></label>
+          </div>
+
+          <div class="applebox">
+            <p class="q">¿Apple lo entregaría así?</p>
+            <p>La pregunta de entrega de la casa: si la respuesta honesta es no, la pieza no sale, aunque pase los 12 filtros.</p>
+            <div class="apple-opts">
+              <button class="btn apple-opt" type="button" id="appleYes">Sí, lo entregaría así</button>
+              <button class="btn apple-opt" type="button" id="appleNo">No, vuelve al taller</button>
+            </div>
+          </div>
+
+          <div class="verdict" id="gateVerdict" role="status">
+            <span class="big-v">Puerta cerrada</span>
+            Marca los 12 filtros y responde la pregunta de entrega para abrir la puerta.
+          </div>
+
+          <div class="gate-actions">
+            <button class="btn primary" type="button" id="gateReady">Marcar listo para publicar</button>
+            <button class="btn" type="button" id="gateReset">Reiniciar ficha</button>
+          </div>
+          <div class="feedback" id="gateFeedback" role="status" style="margin-top:10px;"></div>
+        </div>
+      </section>
+
+      <section id="flujo" aria-labelledby="h-flujo">
+        <div class="sec-head"><h2 id="h-flujo">Cómo trabaja el equipo</h2></div>
+        <p class="sec-sub">El mismo circuito para todo encargo, venga de donde venga. Nada se da por terminado hasta pasar la verificación.</p>
+        <div class="flow">
+          <div class="step"><div class="n">PASO 01</div><h4>Reparte</h4><p>El Coordinador formatea el encargo: destinatario, tarea, contexto y criterio de entrega.</p></div>
+          <div class="step"><div class="n">PASO 02</div><h4>Ejecuta</h4><p>El agente trabaja en su canal: Muse directo; ChatGPT y Gemini por el puente de copiar y pegar.</p></div>
+          <div class="step"><div class="n">PASO 03</div><h4>Devuelve</h4><p>La respuesta se pega en «Respuestas del equipo» y queda guardada en este dispositivo con su estado de verificación.</p></div>
+          <div class="step"><div class="n">PASO 04</div><h4>Verifica</h4><p>Muse comprueba el resultado en su fuente antes de darlo por bueno. Si no pasa, regresa al taller.</p></div>
+        </div>
+      </section>
+
+      <section id="reglas" aria-labelledby="h-reglas">
+        <div class="sec-head"><h2 id="h-reglas">Reglas de la casa</h2></div>
+        <div class="rules">
+          <ul>
+            <li><b>El resultado manda.</b> <span>Cuenta el trabajo verificado y el dinero cobrado, no las explicaciones.</span></li>
+            <li><b>Nada se da por hecho sin verificar.</b> <span>Cada afirmación se comprueba en su panel o su fuente antes de reportarse.</span></li>
+            <li><b>Cero conexiones falsas.</b> <span>Lo que no está conectado de verdad se mueve a mano y se dice así, sin disfrazarlo de automático.</span></li>
+            <li><b>Muse guía; los demás asisten.</b> <span>ChatGPT y Gemini reciben encargos de Muse, y todo lo que producen pasa por su verificación antes de usarse.</span></li>
+            <li><b>Sin suscripciones ni claves.</b> <span>La app es propia y gratuita; las APIs oficiales de ChatGPT y Gemini no están conectadas ni se fingen.</span></li>
+            <li><b>Calidad o no sale.</b> <span>Los 12 filtros y la pregunta «¿Apple lo entregaría así?» mandan en la puerta de calidad antes de publicar.</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="datos" aria-labelledby="h-datos">
+        <div class="sec-head"><h2 id="h-datos">Datos y respaldo</h2><span class="tag mono">localStorage · exportar / importar en texto</span></div>
+        <p class="sec-sub">Todo el estado de la app — panel, paquete, cola, respuestas y ficha de calidad — vive en este dispositivo. Para respaldarlo o moverlo a otro teléfono: exporta el estado, cópialo y guárdalo donde quieras; en el otro dispositivo, pégalo aquí e impórtalo. Sin cuentas, sin nube, sin claves.</p>
+        <div class="card">
+          <label for="stateText" style="display:block; font-size:13px; font-weight:700; margin-bottom:6px;">Estado en texto (JSON)</label>
+          <textarea class="data-area" id="stateText" placeholder="Pulsa «Exportar estado» para ver aquí el respaldo completo, o pega un respaldo anterior y pulsa «Importar estado»."></textarea>
+          <div class="data-actions">
+            <button class="btn primary" type="button" id="exportBtn">Exportar estado</button>
+            <button class="btn" type="button" id="copyStateBtn">Copiar respaldo</button>
+            <button class="btn" type="button" id="importBtn">Importar estado</button>
+            <button class="btn ghost-danger" type="button" id="wipeBtn">Borrar todo el estado</button>
+          </div>
+          <div class="feedback" id="dataFeedback" role="status" style="margin-top:10px;"></div>
+          <p class="honest-note"><b>Ojo:</b> importar reemplaza TODO el estado actual de este dispositivo por el del texto pegado. Exporta primero si quieres conservar lo de ahora.</p>
+        </div>
+      </section>
+
+
+      <section id="instalar" aria-labelledby="h-instalar">
+        <div class="sec-head"><h2 id="h-instalar">Instalar en iPhone</h2><span class="tag mono">PWA · HTTPS</span></div>
+        <div class="install-card">
+          <h3>SPIRIT IA como app</h3>
+          <p>Cuando esta carpeta se sirva desde una dirección HTTPS, abre SPIRIT IA en Safari y sigue estos pasos:</p>
+          <ol>
+            <li>Toca el botón Compartir.</li>
+            <li>Elige «Añadir a pantalla de inicio».</li>
+            <li>Confirma el nombre «SPIRIT IA» y toca «Añadir».</li>
+          </ol>
+          <p class="sw-state" id="swState">Comprobando el modo app…</p>
+          <p>Si se abre como archivo suelto, la página funciona, pero el service worker y la instalación completa solo se activan servidos por HTTPS o en localhost. El estado guardado (localStorage) funciona también en la vista previa, siempre dentro del mismo navegador.</p>
+        </div>
+      </section>
+
+      <footer>
+        <span>SPIRIT IA v3 · Consola diaria privada de Crecer Digital</span>
+        <span class="mono" id="footDate"></span>
+      </footer>
+    </main>
+
+    <script>
+      (function () {
+        "use strict";
+
+        var ROLES = { "Muse": "Operaciones", "ChatGPT": "Análisis", "Gemini": "Investigación y creación" };
+        var COLORS = {
+          "Muse": ["var(--claude)", "var(--claude-soft)"],
+          "ChatGPT": ["var(--chatgpt)", "var(--chatgpt-soft)"],
+          "Gemini": ["var(--gemini)", "var(--gemini-soft)"]
+        };
+        var STATUSES = ["Pendiente", "En curso", "Hecho"];
+        var RESPONSE_STATUSES = ["Pendiente de verificación", "En revisión por Muse", "Verificada por Muse", "Devuelta a corrección"];
+        var FILTER_NAMES = ["Estudio del líder", "Paridad o superioridad funcional", "Legalidad y permisos", "Experiencia de usuario (UX)", "Diseño y acabado visual", "Contenido y textos", "Honestidad estructural", "Funcionamiento real verificado", "Rendimiento y confiabilidad", "Seguridad y privacidad", "Valor real para la persona", "Soporte y mejora continua"];
+        var LS_KEY = "spiritia.v3.estado";
+        var QUEUE_EMPTY = "La cola está vacía. Genera el primer encargo en el Coordinador y añádelo aquí para hacerle seguimiento: pendiente → en curso → hecho. La cola se guarda en este dispositivo.";
+        var RESP_EMPTY = "Todavía no hay respuestas registradas. Cuando ChatGPT o Gemini entreguen por el puente, pega la respuesta completa aquí y conserva su estado de verificación.";
+
+        /* ---------- Estado y persistencia local (localStorage) ---------- */
+        function defaultState() {
+          return {
+            version: 3,
+            panel: { tablero: 44, fondoCobrado: 0, fondoMeta: 20000, semanaCobrado: 0, semanaPiso: 400, embProp: 7, embResp: 1, embEnt: 0, embCon: 0, tareasHoy: 0 },
+            queue: [], nextId: 1,
+            responses: [], nextResponseId: 1,
+            paquete: [
+              { id: 1, text: "Guru: escribir la cantidad exacta del cargo temporal de la tarjeta y enviar la verificación a revisión", done: false },
+              { id: 2, text: "SPIRIT IA: completar el inicio de sesión de Netlify para desplegar la app", done: false },
+              { id: 3, text: "VerboLabs: si llega su canal seguro, enviar la identificación oficial (1 minuto)", done: false },
+              { id: 4, text: "Outlier: autorizar el mensaje a soporte por el país del documento (borrador ya listo)", done: false }
+            ],
+            nextPaqueteId: 5,
+            calidad: { pieza: "", checks: [false, false, false, false, false, false, false, false, false, false, false, false], apple: "", listo: false, listoCuando: "" }
+          };
+        }
+        function num(v, dflt) { var n = parseFloat(v); return isFinite(n) ? n : dflt; }
+        function int(v, dflt) { var n = parseInt(v, 10); return isFinite(n) ? n : dflt; }
+        function clamp(n, lo, hi) { return Math.max(lo, Math.min(hi, n)); }
+
+        function normalizeState(raw) {
+          var s = defaultState();
+          if (!raw || typeof raw !== "object") return s;
+          if (raw.panel && typeof raw.panel === "object") {
+            var p = raw.panel, d = s.panel;
+            d.tablero = clamp(num(p.tablero, d.tablero), 0, 100);
+            d.fondoCobrado = Math.max(0, num(p.fondoCobrado, d.fondoCobrado));
+            d.fondoMeta = Math.max(1, num(p.fondoMeta, d.fondoMeta));
+            d.semanaCobrado = Math.max(0, num(p.semanaCobrado, d.semanaCobrado));
+            d.semanaPiso = Math.max(1, num(p.semanaPiso, d.semanaPiso));
+            d.embProp = Math.max(0, int(p.embProp, d.embProp));
+            d.embResp = Math.max(0, int(p.embResp, d.embResp));
+            d.embEnt = Math.max(0, int(p.embEnt, d.embEnt));
+            d.embCon = Math.max(0, int(p.embCon, d.embCon));
+            d.tareasHoy = Math.max(0, int(p.tareasHoy, d.tareasHoy));
+          }
+          if (Array.isArray(raw.queue)) {
+            s.queue = raw.queue.filter(function (q) { return q && typeof q === "object"; }).map(function (q) {
+              return { id: int(q.id, 0), agent: ROLES[q.agent] ? q.agent : "Muse", prio: typeof q.prio === "string" ? q.prio : "Normal", title: String(q.title || "Encargo sin título"), status: clamp(int(q.status, 0), 0, 2) };
+            });
+          }
+          s.nextId = Math.max(1, int(raw.nextId, 1));
+          if (Array.isArray(raw.responses)) {
+            s.responses = raw.responses.filter(function (r) { return r && typeof r === "object"; }).map(function (r) {
+              return { id: int(r.id, 0), source: (r.source === "Gemini" || r.source === "ChatGPT") ? r.source : "ChatGPT", status: clamp(int(r.status, 0), 0, 3), title: String(r.title || "Respuesta"), text: String(r.text || ""), when: String(r.when || new Date().toISOString()) };
+            });
+          }
+          s.nextResponseId = Math.max(1, int(raw.nextResponseId, 1));
+          if (Array.isArray(raw.paquete)) {
+            s.paquete = raw.paquete.filter(function (t) { return t && typeof t === "object" && String(t.text || "").trim(); }).map(function (t) {
+              return { id: int(t.id, 0), text: String(t.text), done: !!t.done };
+            });
+          }
+          s.nextPaqueteId = Math.max(1, int(raw.nextPaqueteId, s.paquete.length + 1));
+          if (raw.calidad && typeof raw.calidad === "object") {
+            var c = raw.calidad;
+            s.calidad.pieza = String(c.pieza || "");
+            if (Array.isArray(c.checks)) { for (var i = 0; i < 12; i++) s.calidad.checks[i] = !!c.checks[i]; }
+            s.calidad.apple = (c.apple === "si" || c.apple === "no") ? c.apple : "";
+            s.calidad.listo = !!c.listo;
+            s.calidad.listoCuando = String(c.listoCuando || "");
+          }
+          return s;
+        }
+
+        var state = defaultState();
+        try {
+          var saved = window.localStorage.getItem(LS_KEY);
+          if (saved) state = normalizeState(JSON.parse(saved));
+        } catch (e) { /* sin almacenamiento disponible: la app sigue en memoria */ }
+
+        function save() {
+          try { window.localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch (e) {}
+        }
+
+        /* Atajos vivos al estado (las vistas leen y escriben aquí) */
+        var queue = state.queue;
+        var responses = state.responses;
+        var currentBrief = null;
+
+        /* ---------- Referencias DOM ---------- */
+        function el(id) { return document.getElementById(id); }
+        var fAgent = el("fAgent"), fPrio = el("fPrio"), fTitle = el("fTitle"), fContext = el("fContext"), fDone = el("fDone");
+        var outWrap = el("outWrap"), briefOut = el("briefOut"), feedback = el("feedback");
+        var queueList = el("queueList"), queueCounts = el("queueCounts"), pulseQueue = el("pulseQueue");
+        var rSource = el("rSource"), rStatus = el("rStatus"), rTitle = el("rTitle"), rText = el("rText");
+        var responseList = el("responseList"), responseCounts = el("responseCounts"), responseFeedback = el("responseFeedback");
+        var swState = el("swState");
+        var paqueteList = el("paqueteList"), paqueteCounts = el("paqueteCounts"), paqueteFeedback = el("paqueteFeedback");
+        var stateText = el("stateText"), dataFeedback = el("dataFeedback");
+        var gatePiece = el("gatePiece"), gateCount = el("gateCount"), gateBar = el("gateBar"),
+            gateVerdict = el("gateVerdict"), gateFeedback = el("gateFeedback"),
+            appleYes = el("appleYes"), appleNo = el("appleNo");
+        var gateBoxes = document.querySelectorAll("[data-filter]");
+
+        /* Fecha de hoy (hora de casa, America/New_York) */
+        try {
+          var fmt = new Intl.DateTimeFormat("es-ES", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "America/New_York" });
+          var today = fmt.format(new Date());
+          today = today.charAt(0).toUpperCase() + today.slice(1);
+          el("today").textContent = today;
+          el("footDate").textContent = today;
+        } catch (e) {
+          el("today").textContent = "Hoy";
+        }
+
+        /* ---------- Service worker (solo HTTPS/localhost) ---------- */
+        function setSWState(msg) { if (swState) swState.textContent = msg; }
+        if ("serviceWorker" in navigator && (window.location.protocol === "https:" || window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1")) {
+          window.addEventListener("load", function () {
+            navigator.serviceWorker.register("./service-worker.js").then(function () {
+              setSWState("Modo app: service worker registrado en este origen.");
+            }, function () {
+              setSWState("Modo app: no se pudo registrar el service worker en este origen.");
+            });
+          });
+        } else {
+          setSWState("Modo app: el service worker se activa cuando la app se abre desde HTTPS.");
+        }
+
+        function fmtMoney(n) {
+          return Number(n).toLocaleString("en-US", { maximumFractionDigits: (Math.round(n) === n ? 0 : 2) });
+        }
+        function pct(part, whole) { return whole > 0 ? clamp(Math.round((part / whole) * 100), 0, 100) : 0; }
+
+        /* ---------- Panel del día ---------- */
+        var PANEL_INPUTS = [
+          ["inTablero", "tablero"], ["inFondo", "fondoCobrado"], ["inFondoMeta", "fondoMeta"],
+          ["inSemana", "semanaCobrado"], ["inSemanaPiso", "semanaPiso"],
+          ["inEmbProp", "embProp"], ["inEmbResp", "embResp"], ["inEmbEnt", "embEnt"], ["inEmbCon", "embCon"],
+          ["inTareas", "tareasHoy"]
+        ];
+        function renderPanel(updateInputs) {
+          var p = state.panel;
+          el("tableroBig").textContent = String(p.tablero);
+          el("tableroPctTxt").textContent = p.tablero + "%";
+          el("tableroBar").style.width = p.tablero + "%";
+          el("tableroBar").className = "bar-fill" + (p.tablero >= 100 ? " ok" : "");
+          el("fondoBig").textContent = fmtMoney(p.fondoCobrado);
+          el("fondoPctTxt").textContent = pct(p.fondoCobrado, p.fondoMeta) + "%";
+          el("fondoBar").style.width = pct(p.fondoCobrado, p.fondoMeta) + "%";
+          el("semanaBig").textContent = fmtMoney(p.semanaCobrado);
+          el("semanaPctTxt").textContent = pct(p.semanaCobrado, p.semanaPiso) + "% del piso";
+          el("semanaBar").style.width = pct(p.semanaCobrado, p.semanaPiso) + "%";
+          el("semanaBar").className = "bar-fill" + (p.semanaCobrado >= p.semanaPiso ? " ok" : "");
+          el("embProp").textContent = String(p.embProp);
+          el("embResp").textContent = String(p.embResp);
+          el("embEnt").textContent = String(p.embEnt);
+          el("embCon").textContent = String(p.embCon);
+          el("tareasBig").textContent = String(p.tareasHoy);
+          el("tareasBar").style.width = pct(p.tareasHoy, 30) + "%";
+          el("tareasBar").className = "bar-fill" + (p.tareasHoy >= 30 ? " ok" : "");
+          /* La meta y el piso visibles siguen a los valores guardados */
+          document.querySelector("#panel .stat:nth-child(2) .unit").textContent = " de $" + fmtMoney(p.fondoMeta);
+          document.querySelector("#panel .stat:nth-child(3) .unit").textContent = " de $" + fmtMoney(p.semanaPiso);
+          if (updateInputs) {
+            PANEL_INPUTS.forEach(function (pair) { el(pair[0]).value = String(p[pair[1]]); });
+          }
+        }
+        PANEL_INPUTS.forEach(function (pair) {
+          el(pair[0]).addEventListener("input", function () {
+            var v = num(this.value, state.panel[pair[1]]);
+            if (pair[1] === "tablero") v = clamp(v, 0, 100);
+            if (pair[1] === "fondoMeta" || pair[1] === "semanaPiso") v = Math.max(1, v);
+            state.panel[pair[1]] = Math.max(0, v);
+            save();
+            renderPanel(false);
+          });
+        });
+
+        /* ---------- Paquete diario del dueño ---------- */
+        function paqueteSay(msg, warn) {
+          paqueteFeedback.textContent = msg;
+          paqueteFeedback.className = "feedback" + (warn ? " warn" : "");
+        }
+        function renderPaquete() {
+          paqueteList.innerHTML = "";
+          if (!state.paquete.length) {
+            var empty = document.createElement("div");
+            empty.className = "queue-empty";
+            empty.textContent = "Sin toques pendientes. Cuando algo necesite la mano del dueño, se anota aquí — junto, en un solo paquete.";
+            paqueteList.appendChild(empty);
+          } else {
+            state.paquete.forEach(function (t) { paqueteList.appendChild(paqueteItemEl(t)); });
+          }
+          var done = state.paquete.filter(function (t) { return t.done; }).length;
+          paqueteCounts.innerHTML = state.paquete.length
+            ? "<b>" + state.paquete.length + "</b> toques · <b>" + (state.paquete.length - done) + "</b> pendientes · <b>" + done + "</b> hechos"
+            : "Sin toques pendientes";
+        }
+        function paqueteItemEl(t) {
+          var wrap = document.createElement("div");
+          wrap.className = "touch" + (t.done ? " done" : "");
+          var cb = document.createElement("input");
+          cb.type = "checkbox"; cb.checked = t.done;
+          cb.setAttribute("aria-label", "Marcar como hecho el toque «" + t.text + "»");
+          cb.addEventListener("change", function () {
+            t.done = cb.checked;
+            save();
+            renderPaquete();
+            paqueteSay(t.done ? "Toque marcado como hecho. Guardado en este dispositivo." : "Toque de vuelta a pendiente.");
+          });
+          var body = document.createElement("div"); body.className = "t";
+          var who = document.createElement("div"); who.className = "who"; who.textContent = "Toque del dueño";
+          var txt = document.createElement("div"); txt.textContent = t.text;
+          body.appendChild(who); body.appendChild(txt);
+          var del = document.createElement("button");
+          del.type = "button"; del.className = "iconbtn";
+          del.setAttribute("aria-label", "Quitar el toque «" + t.text + "»");
+          del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>';
+          del.addEventListener("click", function () {
+            state.paquete = state.paquete.filter(function (x) { return x.id !== t.id; });
+            save();
+            renderPaquete();
+            paqueteSay("Toque eliminado del paquete.");
+          });
+          wrap.appendChild(cb); wrap.appendChild(body); wrap.appendChild(del);
+          return wrap;
+        }
+        el("paqueteForm").addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          var v = el("paqueteNew").value.trim();
+          if (!v) { paqueteSay("Escribe primero el toque que quieres añadir.", true); return; }
+          state.paquete.push({ id: state.nextPaqueteId++, text: v, done: false });
+          el("paqueteNew").value = "";
+          save();
+          renderPaquete();
+          paqueteSay("Toque añadido al paquete del dueño.");
+        });
+
+
+        /* ---------- Plantillas ---------- */
+        var TEMPLATES = {
+          deploy404: {
+            agent: "ChatGPT", prio: "Alta",
+            title: "Diagnosticar por qué el despliegue de SPIRIT IA en Netlify devuelve 404",
+            context: "Sitio: https://eclectic-cucurucho-dbbdcf.netlify.app — desplegado vía Netlify Drop y ya puesto público para auditarlo.\n\nDiagnóstico verificado (no es suposición):\n- La raíz / devuelve error 404 (página por defecto de Netlify).\n- También dan 404: /index.html, /app, /dist/, /public/, /home, /assets/.\n- Lo único que responde 200 es /favicon.ico.\nConclusión: el paquete subido no contiene una app servible en la raíz; probablemente el index quedó dentro de una subcarpeta o no se incluyó.",
+            done: "Entregar la estructura exacta de archivos del paquete original y el paquete completo corregido, archivo por archivo, con index.html en la raíz y sin paso de compilación."
+          },
+          auditoria: {
+            agent: "Muse", prio: "Normal",
+            title: "Auditar una página y corregir lo que falle",
+            context: "Pega aquí la dirección de la página y qué debe hacer. Muse la abre en teléfono y escritorio, revisa errores, enlaces, textos y controles, y corrige antes de reportar.",
+            done: "Entregar la lista de fallos encontrados con su corrección aplicada y la verificación final en pantalla."
+          },
+          mercado: {
+            agent: "Gemini", prio: "Normal",
+            title: "Investigar un mercado o tema y traerlo con fuentes",
+            context: "Escribe aquí el tema exacto, la zona geográfica y para qué se va a usar la investigación. Sin datos inventados: cada afirmación con su fuente.",
+            done: "Entregar un resumen con los datos clave, las fuentes enlazadas y lo que no se pudo comprobar, marcado como tal."
+          },
+          revision: {
+            agent: "ChatGPT", prio: "Normal",
+            title: "Revisar un texto antes de enviarlo o publicarlo",
+            context: "Pega aquí el texto completo y di a quién va dirigido y qué debe lograr. Revisa claridad, tono, errores y lo que sobre o falte.",
+            done: "Entregar el texto corregido y, aparte, la lista breve de cambios importantes con su porqué."
+          },
+          segunda: {
+            agent: "ChatGPT", prio: "Alta",
+            title: "Segunda opinión antes de lanzar",
+            context: "Describe aquí qué se va a lanzar (producto, página, oferta), a quién va dirigido y qué está en juego si sale mal.",
+            done: "Entregar un veredicto claro — lanzar, corregir o no lanzar — con los tres riesgos mayores y cómo se cubre cada uno."
+          }
+        };
+
+        function applyTemplate(key) {
+          var t = TEMPLATES[key];
+          if (!t) return;
+          fAgent.value = t.agent;
+          fPrio.value = t.prio;
+          fTitle.value = t.title;
+          fContext.value = t.context;
+          fDone.value = t.done;
+          say("");
+          el("coordinador").scrollIntoView({ behavior: "smooth", block: "start" });
+          setTimeout(function () { fTitle.focus({ preventScroll: true }); }, 350);
+        }
+
+        var tplBtns = document.querySelectorAll("[data-tpl]");
+        for (var i = 0; i < tplBtns.length; i++) {
+          tplBtns[i].addEventListener("click", function () { applyTemplate(this.getAttribute("data-tpl")); });
+        }
+
+        /* Botones "Encargar a …" de las tarjetas */
+        var assignBtns = document.querySelectorAll("[data-assign]");
+        for (var j = 0; j < assignBtns.length; j++) {
+          assignBtns[j].addEventListener("click", function () {
+            fAgent.value = this.getAttribute("data-assign");
+            el("coordinador").scrollIntoView({ behavior: "smooth", block: "start" });
+            setTimeout(function () { fTitle.focus({ preventScroll: true }); }, 350);
+          });
+        }
+
+        /* ---------- Generar encargo ---------- */
+        function say(msg) { feedback.textContent = msg; }
+
+        function buildBrief() {
+          var agent = fAgent.value;
+          var prio = fPrio.value;
+          var title = fTitle.value.trim();
+          var context = fContext.value.trim();
+          var done = fDone.value.trim();
+          var dateStr = el("today").textContent;
+          var lines = [];
+          lines.push("ENCARGO SPIRIT IA");
+          lines.push("Para: " + agent + " (" + ROLES[agent] + ")");
+          lines.push("Prioridad: " + prio);
+          lines.push("Fecha: " + dateStr);
+          lines.push("");
+          lines.push("CONTEXTO FIJO DE LA CASA");
+          lines.push("- Crecer Digital es la operación de Cristhiam; español primero.");
+          lines.push("- Muse dirige y verifica; ChatGPT analiza; Gemini investiga y crea.");
+          lines.push("- Hechos y cifras solo si están verificados; no inventes clientes, ventas, precios ni resultados.");
+          lines.push(agent === "Muse" ? "- Canal: directo dentro de la casa." : "- Canal: puente manual de SPIRIT IA; no afirmes una conexión automática inexistente.");
+          lines.push("");
+          lines.push("TAREA");
+          lines.push(title || "(sin título — escribe la tarea antes de enviar)");
+          if (context) { lines.push(""); lines.push("CONTEXTO Y DATOS"); lines.push(context); }
+          if (done) { lines.push(""); lines.push("CRITERIO DE ENTREGA"); lines.push(done); }
+          lines.push("");
+          lines.push("REGLAS");
+          lines.push("- Responde con hechos verificables; lo que no puedas comprobar, dilo tal cual.");
+          lines.push("- Sin relleno: ve al resultado que pide el criterio de entrega.");
+          lines.push("- Si falta un dato indispensable, pide solo ese dato y sigue con el resto.");
+          return { agent: agent, prio: prio, title: title, text: lines.join("\n") };
+        }
+
+        el("briefForm").addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          if (!fTitle.value.trim()) {
+            say("Escribe primero la tarea: sin tarea no hay encargo.");
+            fTitle.focus();
+            return;
+          }
+          currentBrief = buildBrief();
+          briefOut.textContent = currentBrief.text;
+          outWrap.classList.add("show");
+          say("Encargo generado. Cópialo y pégalo en " + currentBrief.agent + ", o déjalo en la cola.");
+          outWrap.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+
+        el("clearBtn").addEventListener("click", function () {
+          fTitle.value = ""; fContext.value = ""; fDone.value = "";
+          fPrio.value = "Normal";
+          outWrap.classList.remove("show");
+          currentBrief = null;
+          say("");
+          fTitle.focus();
+        });
+
+        /* ---------- Copiar / descargar ---------- */
+        function copyText(text, done) {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+          } else { fallbackCopy(text); done(); }
+        }
+        function fallbackCopy(text) {
+          var ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed"; ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (e) {}
+          document.body.removeChild(ta);
+        }
+
+        el("copyBtn").addEventListener("click", function () {
+          if (!currentBrief) return;
+          copyText(currentBrief.text, function () { say("Copiado. Ya puedes pegarlo en " + currentBrief.agent + "."); });
+        });
+
+        el("dlBtn").addEventListener("click", function () {
+          if (!currentBrief) return;
+          var name = "encargo-" + currentBrief.agent.toLowerCase() + "-" + state.nextId + ".txt";
+          var blob = new Blob([currentBrief.text], { type: "text/plain;charset=utf-8" });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement("a");
+          a.href = url; a.download = name;
+          document.body.appendChild(a); a.click();
+          document.body.removeChild(a);
+          setTimeout(function () { URL.revokeObjectURL(url); }, 800);
+          say("Descargado como " + name + ".");
+        });
+
+        /* ---------- Cola (persistente) ---------- */
+        el("queueBtn").addEventListener("click", function () {
+          if (!currentBrief) return;
+          queue.push({ id: state.nextId++, agent: currentBrief.agent, prio: currentBrief.prio, title: currentBrief.title || "Encargo sin título", status: 0 });
+          save();
+          renderQueue();
+          say("Añadido a la cola. Queda guardado en este dispositivo.");
+          el("cola").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        function renderQueue() {
+          queue = state.queue;
+          queueList.innerHTML = "";
+          if (!queue.length) {
+            var empty = document.createElement("div");
+            empty.className = "queue-empty";
+            empty.textContent = QUEUE_EMPTY;
+            queueList.appendChild(empty);
+          } else {
+            queue.forEach(function (item) { queueList.appendChild(queueItemEl(item)); });
+          }
+          var p = 0, c = 0, h = 0;
+          queue.forEach(function (it) { if (it.status === 0) p++; else if (it.status === 1) c++; else h++; });
+          queueCounts.innerHTML = queue.length
+            ? "<b>" + queue.length + "</b> en total · <b>" + p + "</b> pendientes · <b>" + c + "</b> en curso · <b>" + h + "</b> hechos"
+            : "Sin encargos todavía";
+          pulseQueue.textContent = String(queue.length);
+        }
+
+        function queueItemEl(item) {
+          var wrap = document.createElement("div");
+          wrap.className = "qitem";
+          wrap.style.setProperty("--ac", COLORS[item.agent][0]);
+          wrap.style.setProperty("--ac-soft", COLORS[item.agent][1]);
+
+          var bar = document.createElement("span"); bar.className = "bar"; bar.setAttribute("aria-hidden", "true");
+          var body = document.createElement("div"); body.className = "body";
+
+          var t = document.createElement("div"); t.className = "t"; t.textContent = item.title;
+          var meta = document.createElement("div"); meta.className = "meta";
+          var pillA = document.createElement("span"); pillA.className = "pill"; pillA.textContent = item.agent + " · " + ROLES[item.agent];
+          var pillP = document.createElement("span"); pillP.className = "pill prio" + (item.prio !== "Normal" ? " alta" : ""); pillP.textContent = "Prioridad: " + item.prio;
+          meta.appendChild(pillA); meta.appendChild(pillP);
+
+          var ops = document.createElement("div"); ops.className = "ops";
+          var sBtn = document.createElement("button");
+          sBtn.type = "button"; sBtn.className = "btn small statusbtn";
+          sBtn.setAttribute("data-s", String(item.status));
+          sBtn.textContent = "Estado: " + STATUSES[item.status] + " — tocar para avanzar";
+          sBtn.setAttribute("aria-label", "Avanzar el estado del encargo «" + item.title + "», ahora " + STATUSES[item.status]);
+          sBtn.addEventListener("click", function () {
+            item.status = (item.status + 1) % STATUSES.length;
+            save();
+            renderQueue();
+          });
+          ops.appendChild(sBtn);
+
+          body.appendChild(t); body.appendChild(meta); body.appendChild(ops);
+
+          var del = document.createElement("button");
+          del.type = "button"; del.className = "iconbtn";
+          del.setAttribute("aria-label", "Quitar de la cola el encargo «" + item.title + "»");
+          del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>';
+          del.addEventListener("click", function () {
+            state.queue = queue.filter(function (q) { return q.id !== item.id; });
+            save();
+            renderQueue();
+          });
+
+          wrap.appendChild(bar); wrap.appendChild(body); wrap.appendChild(del);
+          return wrap;
+        }
+
+
+        /* ---------- Respuestas del equipo (persistentes) ---------- */
+        function responseSay(msg) { responseFeedback.textContent = msg; }
+
+        el("responseForm").addEventListener("submit", function (ev) {
+          ev.preventDefault();
+          var text = rText.value.trim();
+          if (!text) {
+            responseSay("Pega primero la respuesta completa: el registro no acepta entradas vacías.");
+            rText.focus();
+            return;
+          }
+          responses.unshift({
+            id: state.nextResponseId++,
+            source: rSource.value,
+            status: parseInt(rStatus.value, 10) || 0,
+            title: rTitle.value.trim() || ("Respuesta de " + rSource.value),
+            text: text,
+            when: new Date().toISOString()
+          });
+          state.responses = responses;
+          rText.value = "";
+          rTitle.value = "";
+          rStatus.value = "0";
+          save();
+          renderResponses();
+          responseSay("Respuesta registrada y guardada en este dispositivo. Estado: " + RESPONSE_STATUSES[responses[0].status] + ".");
+          el("respuestas").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+
+        el("responseClear").addEventListener("click", function () {
+          rTitle.value = "";
+          rText.value = "";
+          rStatus.value = "0";
+          responseSay("");
+          rText.focus();
+        });
+
+        function renderResponses() {
+          responses = state.responses;
+          responseList.innerHTML = "";
+          if (!responses.length) {
+            var empty = document.createElement("div");
+            empty.className = "queue-empty";
+            empty.textContent = RESP_EMPTY;
+            responseList.appendChild(empty);
+          } else {
+            responses.forEach(function (item) { responseList.appendChild(responseItemEl(item)); });
+          }
+          var p = 0, r = 0, v = 0, d = 0;
+          responses.forEach(function (it) {
+            if (it.status === 0) p++; else if (it.status === 1) r++; else if (it.status === 2) v++; else d++;
+          });
+          responseCounts.innerHTML = responses.length
+            ? "<b>" + responses.length + "</b> en total · <b>" + p + "</b> pendientes · <b>" + r + "</b> en revisión · <b>" + v + "</b> verificadas · <b>" + d + "</b> devueltas"
+            : "Sin respuestas registradas";
+        }
+
+        function responseItemEl(item) {
+          var wrap = document.createElement("div");
+          wrap.className = "qitem ritem";
+          wrap.style.setProperty("--ac", COLORS[item.source][0]);
+          wrap.style.setProperty("--ac-soft", COLORS[item.source][1]);
+
+          var bar = document.createElement("span"); bar.className = "bar"; bar.setAttribute("aria-hidden", "true");
+          var body = document.createElement("div"); body.className = "body";
+
+          var t = document.createElement("div"); t.className = "t"; t.textContent = item.title;
+          var meta = document.createElement("div"); meta.className = "meta";
+          var pillS = document.createElement("span"); pillS.className = "pill"; pillS.textContent = item.source + " · " + ROLES[item.source];
+          var pillW = document.createElement("span"); pillW.className = "pill prio";
+          var whenDate = new Date(item.when);
+          pillW.textContent = (isFinite(whenDate.getTime()) ? whenDate.toLocaleString("es-ES", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "Sin fecha") + " · " + item.text.length + " caracteres";
+          meta.appendChild(pillS); meta.appendChild(pillW);
+
+          var text = document.createElement("div"); text.className = "resp-text"; text.textContent = item.text;
+
+          var ops = document.createElement("div"); ops.className = "ops";
+          var sBtn = document.createElement("button");
+          sBtn.type = "button"; sBtn.className = "btn small statusbtn";
+          sBtn.setAttribute("data-v", String(item.status));
+          sBtn.textContent = "Verificación: " + RESPONSE_STATUSES[item.status] + " — tocar para avanzar";
+          sBtn.setAttribute("aria-label", "Avanzar el estado de verificación de la respuesta «" + item.title + "», ahora " + RESPONSE_STATUSES[item.status]);
+          sBtn.addEventListener("click", function () {
+            item.status = (item.status + 1) % RESPONSE_STATUSES.length;
+            save();
+            renderResponses();
+          });
+          ops.appendChild(sBtn);
+
+          body.appendChild(t); body.appendChild(meta); body.appendChild(text); body.appendChild(ops);
+
+          var del = document.createElement("button");
+          del.type = "button"; del.className = "iconbtn";
+          del.setAttribute("aria-label", "Quitar del registro la respuesta «" + item.title + "»");
+          del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18"/><path d="M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>';
+          del.addEventListener("click", function () {
+            state.responses = responses.filter(function (x) { return x.id !== item.id; });
+            save();
+            renderResponses();
+          });
+
+          wrap.appendChild(bar); wrap.appendChild(body); wrap.appendChild(del);
+          return wrap;
+        }
+
+        /* ---------- Puertas de calidad ---------- */
+        function gateSay(msg, warn) {
+          gateFeedback.textContent = msg;
+          gateFeedback.className = "feedback" + (warn ? " warn" : "");
+        }
+        function gateMissing() {
+          var missing = [];
+          state.calidad.checks.forEach(function (c, i) { if (!c) missing.push(FILTER_NAMES[i]); });
+          return missing;
+        }
+        function renderCalidad(updateInputs) {
+          var c = state.calidad;
+          var count = c.checks.filter(Boolean).length;
+          if (c.listo && !(count === 12 && c.apple === "si")) { c.listo = false; c.listoCuando = ""; }
+          for (var i = 0; i < gateBoxes.length; i++) {
+            var idx = int(gateBoxes[i].getAttribute("data-filter"), 0);
+            gateBoxes[i].checked = !!c.checks[idx];
+            var lab = gateBoxes[i].closest ? gateBoxes[i].closest(".filter") : gateBoxes[i].parentElement;
+            if (lab) lab.classList.toggle("pass", !!c.checks[idx]);
+          }
+          gateCount.textContent = String(count);
+          gateBar.style.width = Math.round((count / 12) * 100) + "%";
+          gateBar.className = "bar-fill" + (count === 12 ? " ok" : "");
+          appleYes.classList.toggle("sel-yes", c.apple === "si");
+          appleNo.classList.toggle("sel-no", c.apple === "no");
+          if (updateInputs) gatePiece.value = c.pieza;
+          if (c.listo) {
+            gateVerdict.className = "verdict ok";
+            gateVerdict.innerHTML = "";
+            var b = document.createElement("span"); b.className = "big-v"; b.textContent = "✔ LISTO PARA PUBLICAR";
+            var d = document.createElement("span");
+            d.textContent = "«" + (c.pieza || "Pieza sin nombre") + "» pasó los 12 filtros y la pregunta de entrega" + (c.listoCuando ? " · marcado el " + new Date(c.listoCuando).toLocaleString("es-ES", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "") + ".";
+            gateVerdict.appendChild(b); gateVerdict.appendChild(d);
+          } else {
+            gateVerdict.className = "verdict";
+            gateVerdict.innerHTML = "";
+            var b2 = document.createElement("span"); b2.className = "big-v"; b2.textContent = "Puerta cerrada";
+            var d2 = document.createElement("span");
+            var miss = gateMissing();
+            var parts = [];
+            if (miss.length) parts.push("faltan " + miss.length + " de 12 filtros");
+            if (c.apple === "") parts.push("falta responder «¿Apple lo entregaría así?»");
+            if (c.apple === "no") parts.push("la pregunta de entrega se respondió NO: vuelve al taller");
+            d2.textContent = parts.length ? ("Para abrir la puerta: " + parts.join(" · ") + ".") : "Marca los 12 filtros y responde la pregunta de entrega para abrir la puerta.";
+            gateVerdict.appendChild(b2); gateVerdict.appendChild(d2);
+          }
+        }
+        for (var g = 0; g < gateBoxes.length; g++) {
+          gateBoxes[g].addEventListener("change", function () {
+            var idx = int(this.getAttribute("data-filter"), 0);
+            state.calidad.checks[idx] = this.checked;
+            if (!this.checked) { state.calidad.listo = false; state.calidad.listoCuando = ""; }
+            save();
+            renderCalidad(false);
+          });
+        }
+        gatePiece.addEventListener("input", function () {
+          state.calidad.pieza = this.value;
+          save();
+        });
+        appleYes.addEventListener("click", function () {
+          state.calidad.apple = "si";
+          save();
+          renderCalidad(false);
+          gateSay("Pregunta de entrega: SÍ registrado.");
+        });
+        appleNo.addEventListener("click", function () {
+          state.calidad.apple = "no";
+          state.calidad.listo = false; state.calidad.listoCuando = "";
+          save();
+          renderCalidad(false);
+          gateSay("Pregunta de entrega: NO. La pieza vuelve al taller; cuando mejore, re-corre los 12 filtros completos.", true);
+        });
+        el("gateReady").addEventListener("click", function () {
+          var miss = gateMissing();
+          if (miss.length === 0 && state.calidad.apple === "si") {
+            state.calidad.listo = true;
+            state.calidad.listoCuando = new Date().toISOString();
+            save();
+            renderCalidad(false);
+            gateSay("Puerta abierta: 12/12 filtros + pregunta de entrega en SÍ. Lista para publicar.");
+          } else {
+            var why = [];
+            if (miss.length) why.push("faltan los filtros: " + miss.join(", "));
+            if (state.calidad.apple === "") why.push("falta responder la pregunta de entrega");
+            if (state.calidad.apple === "no") why.push("la pregunta de entrega está en NO");
+            gateVerdict.className = "verdict blocked";
+            gateVerdict.innerHTML = "";
+            var b = document.createElement("span"); b.className = "big-v"; b.textContent = "✖ NO LISTO PARA PUBLICAR";
+            var d = document.createElement("span"); d.textContent = "La regla de la casa es 12/12 o no sale: " + why.join(" · ") + ".";
+            gateVerdict.appendChild(b); gateVerdict.appendChild(d);
+            gateSay("No se marcó como listo: " + why.join(" · ") + ".", true);
+          }
+        });
+        el("gateReset").addEventListener("click", function () {
+          state.calidad = { pieza: "", checks: [false, false, false, false, false, false, false, false, false, false, false, false], apple: "", listo: false, listoCuando: "" };
+          save();
+          renderCalidad(true);
+          gateSay("Ficha reiniciada. La próxima pieza corre los 12 filtros desde cero.");
+        });
+
+        /* ---------- Datos y respaldo ---------- */
+        function dataSay(msg, warn) {
+          dataFeedback.textContent = msg;
+          dataFeedback.className = "feedback" + (warn ? " warn" : "");
+        }
+        el("exportBtn").addEventListener("click", function () {
+          stateText.value = JSON.stringify(state, null, 2);
+          dataSay("Estado exportado al cuadro de texto. Cópialo y guárdalo donde quieras: es tu respaldo completo.");
+        });
+        el("copyStateBtn").addEventListener("click", function () {
+          if (!stateText.value.trim()) stateText.value = JSON.stringify(state, null, 2);
+          copyText(stateText.value, function () { dataSay("Respaldo copiado al portapapeles."); });
+        });
+        el("importBtn").addEventListener("click", function () {
+          var raw = stateText.value.trim();
+          if (!raw) { dataSay("Pega primero un respaldo en el cuadro de texto.", true); return; }
+          try {
+            var parsed = JSON.parse(raw);
+            if (!parsed || typeof parsed !== "object" || (!parsed.panel && !parsed.queue && !parsed.responses)) throw new Error("formato no reconocido");
+            state = normalizeState(parsed);
+            save();
+            renderAll();
+            dataSay("Estado importado y guardado en este dispositivo. Todo quedó como venía en el respaldo.");
+          } catch (e) {
+            dataSay("Ese texto no es un respaldo válido de SPIRIT IA. No se cambió nada.", true);
+          }
+        });
+        el("wipeBtn").addEventListener("click", function () {
+          if (!window.confirm("¿Borrar TODO el estado guardado (panel, paquete, cola, respuestas y ficha de calidad) y volver a los valores iniciales?")) return;
+          try { window.localStorage.removeItem(LS_KEY); } catch (e) {}
+          state = defaultState();
+          save();
+          stateText.value = "";
+          renderAll();
+          dataSay("Estado borrado. La app volvió a los valores iniciales verificados.");
+        });
+
+        /* ---------- Arranque ---------- */
+        function renderAll() {
+          renderPanel(true);
+          renderPaquete();
+          renderQueue();
+          renderResponses();
+          renderCalidad(true);
+        }
+        renderAll();
+      })();
+    </script>
+  </body>
+</html>
