@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
-    <meta name="description" content="SPIRIT IA v4: consola diaria de trabajo de Crecer Digital. Panel del día, paquete del dueño, coordinador de encargos con Muse, ChatGPT y Gemini, puertas de calidad y respaldo local. Sin suscripciones ni claves." />
+    <meta name="description" content="SPIRIT IA v5: consola diaria de trabajo de Crecer Digital. Panel del día, paquete del dueño, coordinador de encargos con Muse, ChatGPT y Gemini, puertas de calidad y respaldo local. Sin suscripciones ni claves." />
     <meta name="theme-color" content="#0a0d12" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,7 +13,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
-    <title>SPIRIT IA v4</title>
+    <title>SPIRIT IA v5</title>
     <style>
       button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
 
@@ -386,7 +386,7 @@
           <span class="sigil" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/><circle cx="12" cy="12" r="3.2"/></svg>
           </span>
-          SPIRIT&nbsp;IA <span class="ver">v4</span>
+          SPIRIT&nbsp;IA <span class="ver">v5</span>
         </div>
         <nav class="mainnav" aria-label="Secciones">
           <a href="#panel">Panel</a>
@@ -407,7 +407,7 @@
         <h1>La consola diaria de <span class="accent">Crecer Digital</span>.</h1>
         <p class="lede">App principal de trabajo de la casa. Aquí vive el día: el panel con las cifras reales, el paquete del dueño, los encargos del equipo — Muse opera y verifica, ChatGPT analiza, Gemini investiga y crea — y las puertas de calidad antes de publicar. Todo se guarda en este dispositivo.</p>
         <div class="pulse" role="group" aria-label="Estado del centro de mando">
-          <div class="cell"><div class="k">Estado</div><div class="v"><span class="dot" aria-hidden="true"></span>App v4 · Operativa</div></div>
+          <div class="cell"><div class="k">Estado</div><div class="v"><span class="dot" aria-hidden="true"></span>App v5 · Operativa</div></div>
           <div class="cell"><div class="k">Fecha</div><div class="v" id="today">—</div></div>
           <div class="cell"><div class="k">Equipo</div><div class="v">Muse · ChatGPT · Gemini</div></div>
           <div class="cell"><div class="k">Encargos en cola</div><div class="v" id="pulseQueue">0</div></div>
@@ -787,7 +787,7 @@
       </section>
 
       <footer>
-        <span>SPIRIT IA v4 · Consola diaria privada de Crecer Digital</span>
+        <span>SPIRIT IA v5 · Consola diaria privada de Crecer Digital</span>
         <span class="mono" id="footDate"></span>
       </footer>
     </main>
@@ -1522,7 +1522,7 @@
         renderAll();
       })();
     </script>
-  <!-- SPIRIT v4 · Módulo Chat del equipo (autocontenido) -->
+  <!-- SPIRIT v5 · Módulo Chat del equipo (autocontenido) -->
 <style>
 #sp4btn{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:9998;background:linear-gradient(135deg,#f5b942,#e2703a);color:#1a1206;border:none;border-radius:999px;padding:13px 18px;font-size:15px;font-weight:700;box-shadow:0 6px 22px rgba(0,0,0,.45);cursor:pointer}
 #sp4chat{position:fixed;inset:0;z-index:9999;background:#0b1020;color:#eef1ff;display:none;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -1530,6 +1530,9 @@
 .sp4head{display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:#111834;border-bottom:1px solid #26305c}
 .sp4head b{font-size:17px}
 .sp4head small{display:block;color:#9fb0e8;font-weight:400;font-size:12px}
+.sp5team{font-size:11.5px;color:#c9d4ff;margin-top:3px;line-height:1.5}
+.sp5chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
+.sp5chips span{background:#26305c;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600;color:#eef1ff}
 #sp4close{background:#26305c;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
 .sp4modes{display:flex;gap:8px;padding:10px 12px;background:#0e1430}
 .sp4mode{flex:1;background:#1a2247;color:#c9d4ff;border:1px solid #2c3a75;border-radius:10px;padding:9px 6px;font-size:13px;cursor:pointer}
@@ -1553,7 +1556,7 @@
 <button id="sp4btn" type="button">💬 Chat del equipo</button>
 <div id="sp4chat" role="dialog" aria-label="Chat del equipo">
   <div class="sp4head">
-    <div><b>SPIRIT IA · Chat del equipo</b><small>Los cuatro, en nuestra propia app</small></div>
+    <div><b>SPIRIT IA · Chat del equipo</b><small>Los cuatro, en nuestra propia app</small><div class="sp5team">🌅 Muse · central verificada&nbsp; · &nbsp;💬 ChatGPT · vía Muse&nbsp; · &nbsp;✨ Gemini · EN VIVO con tu llave</div><div class="sp5chips" id="sp5chips"></div></div>
     <button id="sp4close" type="button">Cerrar</button>
   </div>
   <div class="sp4modes">
@@ -1645,9 +1648,12 @@ $("sp4mGem").addEventListener("click",function(){mode="gemini";render();});
 $("sp4mTeam").addEventListener("click",function(){mode="team";render();});
 $("sp4btn").addEventListener("click",function(){$("sp4chat").className="open";render();});
 $("sp4close").addEventListener("click",function(){$("sp4chat").className="";});
+function sp5Chips(){try{var raw=localStorage.getItem("spiritia.v3.estado");if(!raw)return;var st=JSON.parse(raw);var ms=(st&&st.metrics)||[];var t="",f="",s="";ms.forEach(function(m){var u=((m.label||"")+" "+(m.value||"")).toLowerCase();if(u.indexOf("tablero")>=0)t=m.value;if(u.indexOf("fondo")>=0)f=m.value;if(u.indexOf("semana")>=0)s=m.value;});var c=$("sp5chips");if(c)c.innerHTML="<span>🌅 Tablero "+(t||"44%")+"</span><span>🎯 Fondo "+(f||"$0 / $20,000")+"</span><span>📅 Semana "+(s||"$0 / $400")+"</span>";}catch(e){}}
+sp5Chips();
+setTimeout(function(){$("sp4chat").className="open";render();},400);
 })();
 </script>
-<!-- /SPIRIT v4 · Chat del equipo -->
+<!-- /SPIRIT v5 · Chat del equipo -->
 
 </body>
 </html>
