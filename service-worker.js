@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "spirit-ia-v11-cache-v1";
+const CACHE_NAME = "spirit-ia-v12-cache-v1";
 const APP_SHELL = [
   "./",
   "./index.html",
