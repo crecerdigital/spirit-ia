@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
-    <meta name="description" content="SPIRIT IA v5: consola diaria de trabajo de Crecer Digital. Panel del día, paquete del dueño, coordinador de encargos con Muse, ChatGPT y Gemini, puertas de calidad y respaldo local. Sin suscripciones ni claves." />
+    <meta name="description" content="SPIRIT IA v7: consola diaria de trabajo de Crecer Digital. Panel del día, paquete del dueño, coordinador de encargos con Muse, ChatGPT y Gemini, puertas de calidad y respaldo local. Sin suscripciones ni claves." />
     <meta name="theme-color" content="#0a0d12" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,7 +13,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
-    <title>SPIRIT IA v5</title>
+    <title>SPIRIT IA v7</title>
     <style>
       button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
 
@@ -386,7 +386,7 @@
           <span class="sigil" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/><circle cx="12" cy="12" r="3.2"/></svg>
           </span>
-          SPIRIT&nbsp;IA <span class="ver">v5</span>
+          SPIRIT&nbsp;IA <span class="ver">v7</span>
         </div>
         <nav class="mainnav" aria-label="Secciones">
           <a href="#panel">Panel</a>
@@ -407,7 +407,7 @@
         <h1>La consola diaria de <span class="accent">Crecer Digital</span>.</h1>
         <p class="lede">App principal de trabajo de la casa. Aquí vive el día: el panel con las cifras reales, el paquete del dueño, los encargos del equipo — Muse opera y verifica, ChatGPT analiza, Gemini investiga y crea — y las puertas de calidad antes de publicar. Todo se guarda en este dispositivo.</p>
         <div class="pulse" role="group" aria-label="Estado del centro de mando">
-          <div class="cell"><div class="k">Estado</div><div class="v"><span class="dot" aria-hidden="true"></span>App v5 · Operativa</div></div>
+          <div class="cell"><div class="k">Estado</div><div class="v"><span class="dot" aria-hidden="true"></span>App v7 · Operativa</div></div>
           <div class="cell"><div class="k">Fecha</div><div class="v" id="today">—</div></div>
           <div class="cell"><div class="k">Equipo</div><div class="v">Muse · ChatGPT · Gemini</div></div>
           <div class="cell"><div class="k">Encargos en cola</div><div class="v" id="pulseQueue">0</div></div>
@@ -787,7 +787,7 @@
       </section>
 
       <footer>
-        <span>SPIRIT IA v5 · Consola diaria privada de Crecer Digital</span>
+        <span>SPIRIT IA v7 · Consola diaria privada de Crecer Digital</span>
         <span class="mono" id="footDate"></span>
       </footer>
     </main>
@@ -1522,7 +1522,7 @@
         renderAll();
       })();
     </script>
-  <!-- SPIRIT v5 · Módulo Chat del equipo (autocontenido) -->
+  <!-- SPIRIT v7 · Módulo Chat del equipo (autocontenido) -->
 <style>
 #sp4btn{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:9998;background:linear-gradient(135deg,#f5b942,#e2703a);color:#1a1206;border:none;border-radius:999px;padding:13px 18px;font-size:15px;font-weight:700;box-shadow:0 6px 22px rgba(0,0,0,.45);cursor:pointer}
 #sp4chat{position:fixed;inset:0;z-index:9999;background:#0b1020;color:#eef1ff;display:none;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -1533,6 +1533,23 @@
 .sp5team{font-size:11.5px;color:#c9d4ff;margin-top:3px;line-height:1.5}
 .sp5chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:5px}
 .sp5chips span{background:#26305c;border-radius:999px;padding:2px 9px;font-size:11px;font-weight:600;color:#eef1ff}
+.sp6trio{display:flex;gap:16px;margin-top:7px}
+.sp6av{display:flex;flex-direction:column;align-items:center;gap:2px;position:relative}
+.sp6pic{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px}
+.sp6muse{background:linear-gradient(135deg,#f5b942,#e2703a)}
+.sp6gpt{background:#10a37f}
+.sp6gem{background:linear-gradient(135deg,#4285f4,#9b72cb)}
+.sp6av label{font-size:10px;color:#c9d4ff}
+.sp6dot{width:9px;height:9px;border-radius:50%;background:#3ddc84;position:absolute;top:-1px;right:1px;border:1.5px solid #111834}
+#sp4close{display:none}
+#sp5chips{display:none}
+#sp7menu,#sp7share{background:#26305c;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+.sp6pic{position:relative;overflow:hidden}
+.sp6pic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:50%}
+#sp7drawer{display:none;background:#0e1430;border-bottom:1px solid #26305c;padding:8px 12px;flex-direction:column;gap:6px}
+#sp7drawer.open{display:flex}
+#sp7drawer button{background:#1a2247;color:#eef1ff;border:1px solid #2c3a75;border-radius:10px;padding:11px;text-align:left;font-size:14px;cursor:pointer}
+#sp6mic{background:#26305c;color:#fff;border:none;border-radius:10px;padding:0 13px;font-size:16px;cursor:pointer}
 #sp4close{background:#26305c;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
 .sp4modes{display:flex;gap:8px;padding:10px 12px;background:#0e1430}
 .sp4mode{flex:1;background:#1a2247;color:#c9d4ff;border:1px solid #2c3a75;border-radius:10px;padding:9px 6px;font-size:13px;cursor:pointer}
@@ -1555,10 +1572,11 @@
 </style>
 <button id="sp4btn" type="button">💬 Chat del equipo</button>
 <div id="sp4chat" role="dialog" aria-label="Chat del equipo">
-  <div class="sp4head">
-    <div><b>SPIRIT IA · Chat del equipo</b><small>Los cuatro, en nuestra propia app</small><div class="sp5team">🌅 Muse · central verificada&nbsp; · &nbsp;💬 ChatGPT · vía Muse&nbsp; · &nbsp;✨ Gemini · EN VIVO con tu llave</div><div class="sp5chips" id="sp5chips"></div></div>
-    <button id="sp4close" type="button">Cerrar</button>
+  <div class="sp4head"><button id="sp7menu" type="button" aria-label="Menú">☰</button>
+    <div><b>SPIRIT IA · Chat del equipo</b><small>Los cuatro, en nuestra propia app</small><div class="sp6trio"><div class="sp6av"><span class="sp6pic sp6muse"><img src="avatar-claude.png" alt="Muse" onerror="this.remove()">🌅</span><label>Muse</label><i class="sp6dot"></i></div><div class="sp6av"><span class="sp6pic sp6gpt"><img src="avatar-chatgpt.png" alt="ChatGPT" onerror="this.remove()">✳️</span><label>ChatGPT</label><i class="sp6dot"></i></div><div class="sp6av"><span class="sp6pic sp6gem"><img src="avatar-gemini.png" alt="Gemini" onerror="this.remove()">✨</span><label>Gemini</label><i class="sp6dot"></i></div></div><div class="sp5chips" id="sp5chips"></div></div>
+    <button id="sp4close" type="button">Cerrar</button><button id="sp7share" type="button">Invitar</button>
   </div>
+  <div id="sp7drawer"><button data-go="panel" type="button">📊 Panel del día</button><button data-go="paquete" type="button">📦 Paquete diario</button><button data-go="coordinador" type="button">🧭 Coordinador de encargos</button><button data-go="respuestas" type="button">✅ Respuestas del equipo</button><button data-go="calidad" type="button">🚪 Puertas de calidad</button><button data-go="chat" type="button">💬 Volver al chat</button></div>
   <div class="sp4modes">
     <button class="sp4mode on" id="sp4mGem" type="button">✨ Gemini · EN VIVO</button>
     <button class="sp4mode" id="sp4mTeam" type="button">🌅 Equipo · Muse y ChatGPT</button>
@@ -1575,7 +1593,7 @@
   <div id="sp4msgs"></div>
   <div class="sp4bar">
     <textarea id="sp4input" rows="1" placeholder="Escribe al equipo…"></textarea>
-    <button id="sp4send" type="button">Enviar</button>
+    <button id="sp6mic" type="button" title="Hablar">🎤</button><button id="sp4send" type="button">Enviar</button>
   </div>
 </div>
 <script>
@@ -1589,11 +1607,14 @@ function load(k,d){try{var v=window.localStorage.getItem(k);return v?JSON.parse(
 function save(k,v){try{window.localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function getKey(){try{return window.localStorage.getItem(LS_KEY)||"";}catch(e){return "";}}
 var gHist=load(LS_G,[]), tHist=load(LS_T,[]);
+var SP6AV={"Muse":"🌅 ","ChatGPT":"💬 ","Gemini":"✨ ","Equipo":"🌅 "};
+function sp6speak(t){try{var u=new SpeechSynthesisUtterance(String(t).slice(0,600));u.lang="es-US";var vs=speechSynthesis.getVoices();for(var i=0;i<vs.length;i++){if(vs[i].lang&&vs[i].lang.indexOf("es")===0){u.voice=vs[i];break;}}speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
 function bubble(list,who,text,extra){
   var d=document.createElement("div");d.className="sp4m "+(who==="me"?"me":"ai");
-  var w=document.createElement("span");w.className="who";w.textContent=who==="me"?"Tú":who;d.appendChild(w);
+  var w=document.createElement("span");w.className="who";w.textContent=who==="me"?"Tú":(SP6AV[who]||"")+who;d.appendChild(w);
   d.appendChild(document.createTextNode(text));
   if(extra){var b=document.createElement("button");b.className="sp4copy";b.type="button";b.textContent="Copiar mensaje";b.addEventListener("click",function(){copyText(text);b.textContent="¡Copiado!";setTimeout(function(){b.textContent="Copiar mensaje";},1500);});d.appendChild(document.createElement("br"));d.appendChild(b);}
+  if(who!=="me"){var sb=document.createElement("button");sb.className="sp4copy";sb.type="button";sb.textContent="🔊 Escuchar";sb.addEventListener("click",function(){sp6speak(text);});d.appendChild(document.createElement("br"));d.appendChild(sb);}
   $("sp4msgs").appendChild(d);$("sp4msgs").scrollTop=1e7;
 }
 function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).catch(function(){});}else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(ta);}}
@@ -1651,9 +1672,13 @@ $("sp4close").addEventListener("click",function(){$("sp4chat").className="";});
 function sp5Chips(){try{var raw=localStorage.getItem("spiritia.v3.estado");if(!raw)return;var st=JSON.parse(raw);var ms=(st&&st.metrics)||[];var t="",f="",s="";ms.forEach(function(m){var u=((m.label||"")+" "+(m.value||"")).toLowerCase();if(u.indexOf("tablero")>=0)t=m.value;if(u.indexOf("fondo")>=0)f=m.value;if(u.indexOf("semana")>=0)s=m.value;});var c=$("sp5chips");if(c)c.innerHTML="<span>🌅 Tablero "+(t||"44%")+"</span><span>🎯 Fondo "+(f||"$0 / $20,000")+"</span><span>📅 Semana "+(s||"$0 / $400")+"</span>";}catch(e){}}
 sp5Chips();
 setTimeout(function(){$("sp4chat").className="open";render();},400);
+$("sp7menu").addEventListener("click",function(){var d=$("sp7drawer");d.className=(d.className==="open")?"":"open";});
+$("sp7share").addEventListener("click",function(){var u="https://crecerdigital.github.io/spirit-ia/";if(navigator.share){navigator.share({title:"SPIRIT IA",url:u}).catch(function(){});}else{copyText(u);alert("Enlace de SPIRIT copiado: "+u);}});
+Array.prototype.forEach.call(document.querySelectorAll("#sp7drawer button"),function(b){b.addEventListener("click",function(){var go=b.getAttribute("data-go");$("sp7drawer").className="";if(go==="chat")return;$("sp4chat").className="";setTimeout(function(){var s=document.getElementById(go);if(s)s.scrollIntoView({behavior:"smooth"});},60);});});
+$("sp6mic").addEventListener("click",function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert("En esta vista, usa el micrófono de tu teclado: toca el campo de texto y luego el 🎤 del teclado.");return;}try{var r=new SR();r.lang="es-US";r.interimResults=false;r.onresult=function(ev){var t=ev.results[0][0].transcript;$("sp4input").value=($("sp4input").value+" "+t).trim();};r.start();}catch(e){alert("No pude abrir el micrófono aquí; usa el 🎤 del teclado.");}});
 })();
 </script>
-<!-- /SPIRIT v5 · Chat del equipo -->
+<!-- /SPIRIT v7 · Chat del equipo -->
 
 </body>
 </html>

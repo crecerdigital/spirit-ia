@@ -1,6 +1,6 @@
 "use strict";
 
-const CACHE_NAME = "spirit-ia-v5-cache-v1";
+const CACHE_NAME = "spirit-ia-v7-cache-v1";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -8,6 +8,9 @@ const APP_SHELL = [
   "./apple-touch-icon.png",
   "./icon-192.png",
   "./icon-512.png",
+  "./avatar-claude.png",
+  "./avatar-chatgpt.png",
+  "./avatar-gemini.png",
 ];
 
 self.addEventListener("install", (event) => {
