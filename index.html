@@ -13,7 +13,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
-    <title>SPIRIT IA v3</title>
+    <title>SPIRIT IA v4</title>
     <style>
       button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
 
@@ -1522,5 +1522,132 @@
         renderAll();
       })();
     </script>
-  </body>
+  <!-- SPIRIT v4 · Módulo Chat del equipo (autocontenido) -->
+<style>
+#sp4btn{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:9998;background:linear-gradient(135deg,#f5b942,#e2703a);color:#1a1206;border:none;border-radius:999px;padding:13px 18px;font-size:15px;font-weight:700;box-shadow:0 6px 22px rgba(0,0,0,.45);cursor:pointer}
+#sp4chat{position:fixed;inset:0;z-index:9999;background:#0b1020;color:#eef1ff;display:none;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
+#sp4chat.open{display:flex}
+.sp4head{display:flex;align-items:center;justify-content:space-between;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:#111834;border-bottom:1px solid #26305c}
+.sp4head b{font-size:17px}
+.sp4head small{display:block;color:#9fb0e8;font-weight:400;font-size:12px}
+#sp4close{background:#26305c;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+.sp4modes{display:flex;gap:8px;padding:10px 12px;background:#0e1430}
+.sp4mode{flex:1;background:#1a2247;color:#c9d4ff;border:1px solid #2c3a75;border-radius:10px;padding:9px 6px;font-size:13px;cursor:pointer}
+.sp4mode.on{background:#f5b942;color:#1a1206;border-color:#f5b942;font-weight:700}
+#sp4keycard{margin:10px 12px;background:#141b3d;border:1px solid #2c3a75;border-radius:12px;padding:12px;font-size:13px;line-height:1.45}
+#sp4keycard a{color:#f5b942}
+#sp4keyrow{display:flex;gap:8px;margin-top:8px}
+#sp4key{flex:1;background:#0b1020;border:1px solid #2c3a75;border-radius:8px;color:#fff;padding:9px;font-size:13px}
+#sp4savekey{background:#f5b942;color:#1a1206;border:none;border-radius:8px;padding:9px 12px;font-weight:700;cursor:pointer}
+#sp4msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.sp4m{max-width:86%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+.sp4m.me{align-self:flex-end;background:#2456c8;color:#fff;border-bottom-right-radius:4px}
+.sp4m.ai{align-self:flex-start;background:#1a2247;color:#eef1ff;border-bottom-left-radius:4px}
+.sp4m .who{display:block;font-size:11px;opacity:.75;margin-bottom:3px}
+.sp4copy{margin-top:6px;background:#26305c;color:#fff;border:none;border-radius:6px;padding:5px 9px;font-size:12px;cursor:pointer}
+.sp4bar{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#111834;border-top:1px solid #26305c}
+#sp4input{flex:1;background:#0b1020;border:1px solid #2c3a75;border-radius:10px;color:#fff;padding:10px;font-size:14px;resize:none;max-height:96px}
+#sp4send{background:#f5b942;color:#1a1206;border:none;border-radius:10px;padding:0 16px;font-weight:700;font-size:14px;cursor:pointer}
+.sp4note{font-size:12px;color:#9fb0e8;padding:0 12px 8px;background:#0e1430}
+</style>
+<button id="sp4btn" type="button">💬 Chat del equipo</button>
+<div id="sp4chat" role="dialog" aria-label="Chat del equipo">
+  <div class="sp4head">
+    <div><b>SPIRIT IA · Chat del equipo</b><small>Los cuatro, en nuestra propia app</small></div>
+    <button id="sp4close" type="button">Cerrar</button>
+  </div>
+  <div class="sp4modes">
+    <button class="sp4mode on" id="sp4mGem" type="button">✨ Gemini · EN VIVO</button>
+    <button class="sp4mode" id="sp4mTeam" type="button">🌅 Equipo · Muse y ChatGPT</button>
+  </div>
+  <div id="sp4keycard">
+    <div id="sp4keystate"></div>
+    <div id="sp4keyrow">
+      <input id="sp4key" type="password" placeholder="Pega aquí tu llave gratuita de Gemini (AIza…)" autocomplete="off">
+      <button id="sp4savekey" type="button">Guardar</button>
+    </div>
+    <div style="margin-top:8px">La llave es <b>gratis</b> y se crea en 1 minuto con tu cuenta de Google: <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a> → «Create API key». Queda guardada <b>solo en tu iPhone</b>, dentro de esta app.</div>
+  </div>
+  <div class="sp4note" id="sp4modeNote"></div>
+  <div id="sp4msgs"></div>
+  <div class="sp4bar">
+    <textarea id="sp4input" rows="1" placeholder="Escribe al equipo…"></textarea>
+    <button id="sp4send" type="button">Enviar</button>
+  </div>
+</div>
+<script>
+(function(){
+"use strict";
+var LS_KEY="spirit_gemini_key", LS_G="spirit_chat_gemini_v4", LS_T="spirit_chat_team_v4";
+var mode="gemini";
+var models=["gemini-2.5-flash","gemini-2.0-flash","gemini-1.5-flash"];
+function $(id){return document.getElementById(id);}
+function load(k,d){try{var v=window.localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function save(k,v){try{window.localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+function getKey(){try{return window.localStorage.getItem(LS_KEY)||"";}catch(e){return "";}}
+var gHist=load(LS_G,[]), tHist=load(LS_T,[]);
+function bubble(list,who,text,extra){
+  var d=document.createElement("div");d.className="sp4m "+(who==="me"?"me":"ai");
+  var w=document.createElement("span");w.className="who";w.textContent=who==="me"?"Tú":who;d.appendChild(w);
+  d.appendChild(document.createTextNode(text));
+  if(extra){var b=document.createElement("button");b.className="sp4copy";b.type="button";b.textContent="Copiar mensaje";b.addEventListener("click",function(){copyText(text);b.textContent="¡Copiado!";setTimeout(function(){b.textContent="Copiar mensaje";},1500);});d.appendChild(document.createElement("br"));d.appendChild(b);}
+  $("sp4msgs").appendChild(d);$("sp4msgs").scrollTop=1e7;
+}
+function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).catch(function(){});}else{var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(e){}document.body.removeChild(ta);}}
+function render(){
+  $("sp4msgs").innerHTML="";
+  var list=mode==="gemini"?gHist:tHist;
+  if(!list.length){
+    bubble("ai",mode==="gemini"?"Gemini":"Equipo",mode==="gemini"?"Hola, soy Gemini. Estoy EN VIVO dentro de SPIRIT: escríbeme y te respondo al instante. Mi fuerte: investigación y creación.":"Aquí escribes a Muse y ChatGPT. Muse recoge tu mensaje, lo trabaja con ChatGPT y las respuestas verificadas quedan en SPIRIT, en la sección Respuestas del equipo.");
+  }
+  list.forEach(function(m){bubble("ai",m.who,m.text,m.who==="me"&&mode==="team");});
+  $("sp4mGem").className="sp4mode"+(mode==="gemini"?" on":"");
+  $("sp4mTeam").className="sp4mode"+(mode==="team"?" on":"");
+  $("sp4modeNote").textContent=mode==="gemini"?"Gemini responde al instante, directo desde la app.":"Muse y ChatGPT no tienen canal en vivo gratuito: Muse trae sus respuestas verificadas a SPIRIT. Copia tu mensaje y pégalo en el chat de Muse para activar al equipo al momento.";
+  keyState();
+}
+function keyState(){
+  var k=getKey();
+  $("sp4keystate").innerHTML=k?"✅ <b>Gemini en vivo: ACTIVO</b> en este iPhone.":"⚠️ <b>Falta tu llave gratuita</b> para encender a Gemini en vivo:";
+  $("sp4keyrow").style.display=k?"none":"flex";
+}
+$("sp4savekey").addEventListener("click",function(){
+  var v=$("sp4key").value.trim();
+  if(!v){alert("Pega primero tu llave de Gemini.");return;}
+  try{window.localStorage.setItem(LS_KEY,v);}catch(e){}
+  $("sp4key").value="";keyState();render();
+  bubble("ai","Gemini","Llave guardada en tu iPhone. Ya estoy en vivo: pregúntame lo que sea.");
+});
+async function askGemini(text){
+  var key=getKey();
+  if(!key){bubble("ai","Gemini","Todavía no tengo llave en este iPhone. Créal gratis en aistudio.google.com/apikey y pégala arriba: tardo 1 minuto en encenderme.");return;}
+  var contents=gHist.filter(function(m){return m.who==="me"||m.who==="Gemini";}).slice(-14).map(function(m){return{role:m.who==="me"?"user":"model",parts:[{text:m.text}]};});
+  contents.push({role:"user",parts:[{text:text}]});
+  var lastErr="";
+  for(var i=0;i<models.length;i++){
+    try{
+      var r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+models[i]+":generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":key},body:JSON.stringify({systemInstruction:{parts:[{text:"Eres Gemini, asistente del equipo de Crecer Digital. Tu jefa es Muse. Respondes en español, directo, útil y breve salvo que pidan detalle."}]},contents:contents})});
+      var j=await r.json();
+      if(!r.ok){lastErr=(j&&j.error&&j.error.message)||("HTTP "+r.status);continue;}
+      var out=j&&j.candidates&&j.candidates[0]&&j.candidates[0].content&&j.candidates[0].content.parts?j.candidates[0].content.parts.map(function(p){return p.text||"";}).join(""):"";
+      if(out){gHist.push({who:"Gemini",text:out});save(LS_G,gHist.slice(-40));bubble("ai","Gemini",out);return;}
+      lastErr="Respuesta vacía del modelo.";
+    }catch(e){lastErr="Sin conexión con Gemini ("+e.message+").";}
+  }
+  bubble("ai","Gemini","No pude responder ahora: "+lastErr+" · Revisa tu llave o tu conexión y reintenta.");
+}
+$("sp4send").addEventListener("click",function(){
+  var t=$("sp4input").value.trim();if(!t)return;$("sp4input").value="";
+  if(mode==="gemini"){gHist.push({who:"me",text:t});save(LS_G,gHist.slice(-40));bubble("ai","me",t);askGemini(t);}
+  else{tHist.push({who:"me",text:t});save(LS_T,tHist.slice(-40));bubble("ai","me",t,true);var r="Guardado en tu bandeja del equipo. Muse lo recoge en su ronda y responde en SPIRIT junto con ChatGPT. Para activarlo al momento, copia el mensaje y pégalo en el chat de Muse.";tHist.push({who:"Equipo",text:r});save(LS_T,tHist.slice(-40));bubble("ai","Equipo",r);}
+});
+$("sp4mGem").addEventListener("click",function(){mode="gemini";render();});
+$("sp4mTeam").addEventListener("click",function(){mode="team";render();});
+$("sp4btn").addEventListener("click",function(){$("sp4chat").className="open";render();});
+$("sp4close").addEventListener("click",function(){$("sp4chat").className="";});
+})();
+</script>
+<!-- /SPIRIT v4 · Chat del equipo -->
+
+</body>
 </html>
