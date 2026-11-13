@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="dark" />
-    <meta name="description" content="SPIRIT IA v8: consola diaria de trabajo de Crecer Digital. Panel del día, paquete del dueño, coordinador de encargos con Muse, ChatGPT y Gemini, puertas de calidad y respaldo local. Sin suscripciones ni claves." />
+    <meta name="description" content="SPIRIT IA v9: consola diaria de trabajo de Crecer Digital. Panel del día, paquete del dueño, coordinador de encargos con Muse, ChatGPT y Gemini, puertas de calidad y respaldo local. Sin suscripciones ni claves." />
     <meta name="theme-color" content="#0a0d12" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,7 +13,7 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
     <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
-    <title>SPIRIT IA v8</title>
+    <title>SPIRIT IA v9</title>
     <style>
       button, [role="button"], select, summary, input:not([type="checkbox"], [type="radio"]) { min-height: 2.25rem; }
 
@@ -386,7 +386,7 @@
           <span class="sigil" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4"/><path d="M12 18v4"/><path d="M2 12h4"/><path d="M18 12h4"/><circle cx="12" cy="12" r="3.2"/></svg>
           </span>
-          SPIRIT&nbsp;IA <span class="ver">v8</span>
+          SPIRIT&nbsp;IA <span class="ver">v9</span>
         </div>
         <nav class="mainnav" aria-label="Secciones">
           <a href="#panel">Panel</a>
@@ -407,7 +407,7 @@
         <h1>La consola diaria de <span class="accent">Crecer Digital</span>.</h1>
         <p class="lede">App principal de trabajo de la casa. Aquí vive el día: el panel con las cifras reales, el paquete del dueño, los encargos del equipo — Muse opera y verifica, ChatGPT analiza, Gemini investiga y crea — y las puertas de calidad antes de publicar. Todo se guarda en este dispositivo.</p>
         <div class="pulse" role="group" aria-label="Estado del centro de mando">
-          <div class="cell"><div class="k">Estado</div><div class="v"><span class="dot" aria-hidden="true"></span>App v8 · Operativa</div></div>
+          <div class="cell"><div class="k">Estado</div><div class="v"><span class="dot" aria-hidden="true"></span>App v9 · Operativa</div></div>
           <div class="cell"><div class="k">Fecha</div><div class="v" id="today">—</div></div>
           <div class="cell"><div class="k">Equipo</div><div class="v">Muse · ChatGPT · Gemini</div></div>
           <div class="cell"><div class="k">Encargos en cola</div><div class="v" id="pulseQueue">0</div></div>
@@ -787,7 +787,7 @@
       </section>
 
       <footer>
-        <span>SPIRIT IA v8 · Consola diaria privada de Crecer Digital</span>
+        <span>SPIRIT IA v9 · Consola diaria privada de Crecer Digital</span>
         <span class="mono" id="footDate"></span>
       </footer>
     </main>
@@ -1522,7 +1522,7 @@
         renderAll();
       })();
     </script>
-  <!-- SPIRIT v8 · Módulo Chat del equipo (autocontenido) -->
+  <!-- SPIRIT v9 · Módulo Chat del equipo (autocontenido) -->
 <style>
 #sp4btn{position:fixed;right:14px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:9998;background:linear-gradient(135deg,#f5b942,#e2703a);color:#1a1206;border:none;border-radius:999px;padding:13px 18px;font-size:15px;font-weight:700;box-shadow:0 6px 22px rgba(0,0,0,.45);cursor:pointer}
 #sp4chat{position:fixed;inset:0;z-index:9999;background:#0b1020;color:#eef1ff;display:none;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
@@ -1549,7 +1549,28 @@
 #sp7drawer{display:none;background:#0e1430;border-bottom:1px solid #26305c;padding:8px 12px;flex-direction:column;gap:6px}
 #sp7drawer.open{display:flex}
 #sp7drawer button{background:#1a2247;color:#eef1ff;border:1px solid #2c3a75;border-radius:10px;padding:11px;text-align:left;font-size:14px;cursor:pointer}
-/* SPIRIT v8 · tema blanco amanecer (como Muse, pero nuestro) */
+
+#sp6mic{background:#26305c;color:#fff;border:none;border-radius:10px;padding:0 13px;font-size:16px;cursor:pointer}
+#sp4close{background:#26305c;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+.sp4modes{display:flex;gap:8px;padding:10px 12px;background:#0e1430}
+.sp4mode{flex:1;background:#1a2247;color:#c9d4ff;border:1px solid #2c3a75;border-radius:10px;padding:9px 6px;font-size:13px;cursor:pointer}
+.sp4mode.on{background:#f5b942;color:#1a1206;border-color:#f5b942;font-weight:700}
+#sp4keycard{margin:10px 12px;background:#141b3d;border:1px solid #2c3a75;border-radius:12px;padding:12px;font-size:13px;line-height:1.45}
+#sp4keycard a{color:#f5b942}
+#sp4keyrow{display:flex;gap:8px;margin-top:8px}
+#sp4key{flex:1;background:#0b1020;border:1px solid #2c3a75;border-radius:8px;color:#fff;padding:9px;font-size:13px}
+#sp4savekey{background:#f5b942;color:#1a1206;border:none;border-radius:8px;padding:9px 12px;font-weight:700;cursor:pointer}
+#sp4msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
+.sp4m{max-width:86%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
+.sp4m.me{align-self:flex-end;background:#2456c8;color:#fff;border-bottom-right-radius:4px}
+.sp4m.ai{align-self:flex-start;background:#1a2247;color:#eef1ff;border-bottom-left-radius:4px}
+.sp4m .who{display:block;font-size:11px;opacity:.75;margin-bottom:3px}
+.sp4copy{margin-top:6px;background:#26305c;color:#fff;border:none;border-radius:6px;padding:5px 9px;font-size:12px;cursor:pointer}
+.sp4bar{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#111834;border-top:1px solid #26305c}
+#sp4input{flex:1;background:#0b1020;border:1px solid #2c3a75;border-radius:10px;color:#fff;padding:10px;font-size:14px;resize:none;max-height:96px}
+#sp4send{background:#f5b942;color:#1a1206;border:none;border-radius:10px;padding:0 16px;font-weight:700;font-size:14px;cursor:pointer}
+.sp4note{font-size:12px;color:#9fb0e8;padding:0 12px 8px;background:#0e1430}
+/* SPIRIT v9 · tema blanco amanecer (como Muse, pero nuestro) */
 #sp4chat{background:#fffdf7;color:#2b2110}
 .sp4head{background:#ffffff;border-bottom:1px solid #f0e2c4;box-shadow:0 2px 14px rgba(190,140,40,.10)}
 .sp4head b{color:#3a2a08}
@@ -1577,26 +1598,6 @@
 #sp7drawer{background:#fff8ea;border-bottom-color:#f0e2c4}
 #sp7drawer button{background:#ffffff;border-color:#ecd9ac;color:#4a3a10}
 .sp8ava{width:20px;height:20px;border-radius:50%;object-fit:cover;vertical-align:-5px;margin-right:5px}
-#sp6mic{background:#26305c;color:#fff;border:none;border-radius:10px;padding:0 13px;font-size:16px;cursor:pointer}
-#sp4close{background:#26305c;color:#fff;border:none;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
-.sp4modes{display:flex;gap:8px;padding:10px 12px;background:#0e1430}
-.sp4mode{flex:1;background:#1a2247;color:#c9d4ff;border:1px solid #2c3a75;border-radius:10px;padding:9px 6px;font-size:13px;cursor:pointer}
-.sp4mode.on{background:#f5b942;color:#1a1206;border-color:#f5b942;font-weight:700}
-#sp4keycard{margin:10px 12px;background:#141b3d;border:1px solid #2c3a75;border-radius:12px;padding:12px;font-size:13px;line-height:1.45}
-#sp4keycard a{color:#f5b942}
-#sp4keyrow{display:flex;gap:8px;margin-top:8px}
-#sp4key{flex:1;background:#0b1020;border:1px solid #2c3a75;border-radius:8px;color:#fff;padding:9px;font-size:13px}
-#sp4savekey{background:#f5b942;color:#1a1206;border:none;border-radius:8px;padding:9px 12px;font-weight:700;cursor:pointer}
-#sp4msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:8px}
-.sp4m{max-width:86%;padding:9px 12px;border-radius:14px;font-size:14px;line-height:1.45;white-space:pre-wrap;word-wrap:break-word}
-.sp4m.me{align-self:flex-end;background:#2456c8;color:#fff;border-bottom-right-radius:4px}
-.sp4m.ai{align-self:flex-start;background:#1a2247;color:#eef1ff;border-bottom-left-radius:4px}
-.sp4m .who{display:block;font-size:11px;opacity:.75;margin-bottom:3px}
-.sp4copy{margin-top:6px;background:#26305c;color:#fff;border:none;border-radius:6px;padding:5px 9px;font-size:12px;cursor:pointer}
-.sp4bar{display:flex;gap:8px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:#111834;border-top:1px solid #26305c}
-#sp4input{flex:1;background:#0b1020;border:1px solid #2c3a75;border-radius:10px;color:#fff;padding:10px;font-size:14px;resize:none;max-height:96px}
-#sp4send{background:#f5b942;color:#1a1206;border:none;border-radius:10px;padding:0 16px;font-weight:700;font-size:14px;cursor:pointer}
-.sp4note{font-size:12px;color:#9fb0e8;padding:0 12px 8px;background:#0e1430}
 </style>
 <button id="sp4btn" type="button">💬 Chat del equipo</button>
 <div id="sp4chat" role="dialog" aria-label="Chat del equipo">
@@ -1707,7 +1708,7 @@ Array.prototype.forEach.call(document.querySelectorAll("#sp7drawer button"),func
 $("sp6mic").addEventListener("click",function(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){alert("En esta vista, usa el micrófono de tu teclado: toca el campo de texto y luego el 🎤 del teclado.");return;}try{var r=new SR();r.lang="es-US";r.interimResults=false;r.onresult=function(ev){var t=ev.results[0][0].transcript;$("sp4input").value=($("sp4input").value+" "+t).trim();};r.start();}catch(e){alert("No pude abrir el micrófono aquí; usa el 🎤 del teclado.");}});
 })();
 </script>
-<!-- /SPIRIT v8 · Chat del equipo -->
+<!-- /SPIRIT v9 · Chat del equipo -->
 
 </body>
 </html>
